@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/pagination";
 
 import { Search, Home, MapPin, TrendingUp, MessageCircle, Filter } from "lucide-react";
+import { AnimatedNumber } from "@/components/AnimatedNumber";
 import heroImage from "@/assets/hero-image.jpg";
 import modernHomeIcon from "@/assets/modern-home-icon.png";
 import modernLocationIcon from "@/assets/modern-location-icon.png";
@@ -231,31 +232,37 @@ Gostaria de mais informações.`;
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src={modernHomeIcon} alt="Imóveis" className="w-12 h-12 sm:w-16 sm:h-16 md:w-full md:h-full object-contain rounded-full" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernHomeIcon} alt="Imóveis" className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain rounded-full" />
               </div>
-              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 mb-2 border border-primary/20">
-                <h3 className="text-4xl font-montserrat font-bold text-primary">1.000+</h3>
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-3 sm:p-4 mb-2 border border-primary/20">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-montserrat font-bold text-primary">
+                  <AnimatedNumber end={1000} suffix="+" />
+                </h3>
               </div>
-              <p className="text-muted-foreground font-medium">Imóveis Disponíveis</p>
+              <p className="text-muted-foreground font-medium text-sm sm:text-base">Imóveis Disponíveis</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src={modernLocationIcon} alt="Bairros" className="w-12 h-12 sm:w-16 sm:h-16 md:w-full md:h-full object-contain rounded-full" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernLocationIcon} alt="Bairros" className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain rounded-full" />
               </div>
-              <div className="bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg p-4 mb-2 border border-accent/20">
-                <h3 className="text-4xl font-montserrat font-bold text-primary">50+</h3>
+              <div className="bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg p-3 sm:p-4 mb-2 border border-accent/20">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-montserrat font-bold text-primary">
+                  <AnimatedNumber end={50} suffix="+" />
+                </h3>
               </div>
-              <p className="text-muted-foreground font-medium">Bairros Atendidos</p>
+              <p className="text-muted-foreground font-medium text-sm sm:text-base">Bairros Atendidos</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src={modernChartIcon} alt="Clientes" className="w-12 h-12 sm:w-16 sm:h-16 md:w-full md:h-full object-contain rounded-full" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernChartIcon} alt="Clientes" className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain rounded-full" />
               </div>
-              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 mb-2 border border-primary/20">
-                <h3 className="text-4xl font-montserrat font-bold text-primary">98%</h3>
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-3 sm:p-4 mb-2 border border-primary/20">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-montserrat font-bold text-primary">
+                  <AnimatedNumber end={98} suffix="%" />
+                </h3>
               </div>
-              <p className="text-muted-foreground font-medium">Clientes Satisfeitos</p>
+              <p className="text-muted-foreground font-medium text-sm sm:text-base">Clientes Satisfeitos</p>
             </div>
           </div>
         </div>
@@ -384,7 +391,7 @@ Gostaria de mais informações.`;
 
 
       {/* Footer */}
-      <footer id="contato" className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">        
+      <footer id="contato" className="relative bg-gradient-to-br from-slate-800 to-slate-900 text-white py-16">        
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>

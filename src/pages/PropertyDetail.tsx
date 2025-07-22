@@ -22,6 +22,7 @@ import { useLeads } from "@/hooks/useLeads";
 import { useWhatsAppSettings } from "@/hooks/useWhatsAppSettings";
 import { formatCurrency, formatArea } from "@/lib/formatters";
 import type { Property } from "@/hooks/useProperties";
+import { fakeProperties } from "@/data/fakeProperties";
 
 // Type definitions
 interface PropertyImage {
@@ -31,6 +32,11 @@ interface PropertyImage {
 
 // Type for property features that can be either a record or an array of strings
 type PropertyFeatures = Record<string, unknown> | string[];
+
+// Helper function to get fake property by ID
+const getFakePropertyById = (id: string): Property | null => {
+  return fakeProperties.find(p => p.id === id) || null;
+};
 
 
 export default function PropertyDetail() {
@@ -101,8 +107,26 @@ export default function PropertyDetail() {
           .eq('id', id)
           .single();
 
-        if (fetchError) throw fetchError;
-        if (!data) throw new Error('Property not found');
+        if (fetchError) {
+          // If property not found in database, try fake properties
+          const fakeProperty = getFakePropertyById(id);
+          if (fakeProperty) {
+            setProperty(fakeProperty);
+            setLoading(false);
+            return;
+          }
+          throw fetchError;
+        }
+        if (!data) {
+          // If no data from database, try fake properties
+          const fakeProperty = getFakePropertyById(id);
+          if (fakeProperty) {
+            setProperty(fakeProperty);
+            setLoading(false);
+            return;
+          }
+          throw new Error('Property not found');
+        }
 
         // Handle property features that might be a string or an object
         const propertyData = { ...data };

@@ -30,22 +30,24 @@ export function useWhatsAppSettings() {
         setSettings(data);
       } else {
         // Create default settings if none exist
+        const defaultNumber = '5562981067855'; // Default temporary WhatsApp number
         const { data: newData, error: insertError } = await supabase
           .from('settings')
-          .insert({ whatsapp_number: '5500000000000' })
+          .insert({ whatsapp_number: defaultNumber })
           .select()
           .single();
 
-        if (insertError) throw insertError;
-        setSettings(newData);
+        if (insertError) {
+          // If insert fails, set default settings locally
+          setSettings({ whatsapp_number: defaultNumber });
+        } else {
+          setSettings(newData);
+        }
       }
     } catch (error) {
       console.error('Error fetching WhatsApp settings:', error);
-      toast({
-        title: 'Erro',
-        description: 'Não foi possível carregar as configurações do WhatsApp.',
-        variant: 'destructive',
-      });
+      // Set default settings if there's an error
+      setSettings({ whatsapp_number: '5562981067855' });
     } finally {
       setLoading(false);
     }
@@ -122,8 +124,8 @@ export function useWhatsAppSettings() {
 
   // Create WhatsApp URL with custom message
   const createWhatsAppUrl = (message: string = 'Olá! Gostaria de mais informações.') => {
-    if (!settings?.whatsapp_number) return '#';
-    return `https://wa.me/${settings.whatsapp_number}?text=${encodeURIComponent(message)}`;
+    const number = settings?.whatsapp_number || '5562981067855'; // Default fallback number
+    return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
   };
 
   useEffect(() => {
