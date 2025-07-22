@@ -47,7 +47,7 @@ export default function Index() {
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 6;
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -231,8 +231,8 @@ Gostaria de mais informações.`;
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src={modernHomeIcon} alt="Imóveis" className="w-full h-full object-contain rounded-full" />
+              <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernHomeIcon} alt="Imóveis" className="w-12 h-12 sm:w-16 sm:h-16 md:w-full md:h-full object-contain rounded-full" />
               </div>
               <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 mb-2 border border-primary/20">
                 <h3 className="text-4xl font-montserrat font-bold text-primary">1.000+</h3>
@@ -240,8 +240,8 @@ Gostaria de mais informações.`;
               <p className="text-muted-foreground font-medium">Imóveis Disponíveis</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src={modernLocationIcon} alt="Bairros" className="w-full h-full object-contain rounded-full" />
+              <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernLocationIcon} alt="Bairros" className="w-12 h-12 sm:w-16 sm:h-16 md:w-full md:h-full object-contain rounded-full" />
               </div>
               <div className="bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg p-4 mb-2 border border-accent/20">
                 <h3 className="text-4xl font-montserrat font-bold text-primary">50+</h3>
@@ -249,8 +249,8 @@ Gostaria de mais informações.`;
               <p className="text-muted-foreground font-medium">Bairros Atendidos</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src={modernChartIcon} alt="Clientes" className="w-full h-full object-contain rounded-full" />
+              <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernChartIcon} alt="Clientes" className="w-12 h-12 sm:w-16 sm:h-16 md:w-full md:h-full object-contain rounded-full" />
               </div>
               <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 mb-2 border border-primary/20">
                 <h3 className="text-4xl font-montserrat font-bold text-primary">98%</h3>

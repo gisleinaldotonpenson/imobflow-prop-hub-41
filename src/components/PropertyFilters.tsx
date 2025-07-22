@@ -67,10 +67,10 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
               <div className="space-y-6 p-6 bg-gradient-to-br from-muted/30 to-primary/5 rounded-lg border border-primary/10">
                 {/* Basic Filters */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="purpose" className="text-sm font-medium">
-                      Finalidade
-                    </Label>
+                   <div className="space-y-2">
+                     <Label htmlFor="purpose" className="text-sm font-medium text-primary">
+                       Finalidade
+                     </Label>
                     <Select
                       value={filters.purpose}
                       onValueChange={(value) => onFilterChange("purpose", value)}
@@ -86,10 +86,10 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="type" className="text-sm font-medium">
-                      Tipo
-                    </Label>
+                   <div className="space-y-2">
+                     <Label htmlFor="type" className="text-sm font-medium text-primary">
+                       Tipo
+                     </Label>
                     <Select
                       value={filters.type}
                       onValueChange={(value) => onFilterChange("type", value)}
@@ -109,10 +109,10 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="location" className="text-sm font-medium">
-                      Localização
-                    </Label>
+                   <div className="space-y-2">
+                     <Label htmlFor="location" className="text-sm font-medium text-primary">
+                       Localização
+                     </Label>
                     <div className="relative">
                       <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input
@@ -125,10 +125,10 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="minPrice" className="text-sm font-medium">
-                      Preço Mínimo
-                    </Label>
+                   <div className="space-y-2">
+                     <Label htmlFor="minPrice" className="text-sm font-medium text-primary">
+                       Preço Mínimo
+                     </Label>
                     <Input
                       id="minPrice"
                       placeholder="Ex: 200.000"
@@ -140,10 +140,10 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="maxPrice" className="text-sm font-medium">
-                      Preço Máximo
-                    </Label>
+                   <div className="space-y-2">
+                     <Label htmlFor="maxPrice" className="text-sm font-medium text-primary">
+                       Preço Máximo
+                     </Label>
                     <Input
                       id="maxPrice"
                       placeholder="Ex: 500.000"
@@ -169,8 +169,8 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                   {/* Advanced Filters */}
                   {showAdvanced && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 p-4 bg-muted/30 rounded-lg">
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Quartos</Label>
+                       <div className="space-y-2">
+                         <Label className="text-sm font-medium text-primary">Quartos</Label>
                         <Select
                           value={filters.bedrooms}
                           onValueChange={(value) => onFilterChange("bedrooms", value)}
@@ -188,8 +188,8 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                         </Select>
                       </div>
 
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Banheiros</Label>
+                       <div className="space-y-2">
+                         <Label className="text-sm font-medium text-primary">Banheiros</Label>
                         <Select
                           value={filters.bathrooms}
                           onValueChange={(value) => onFilterChange("bathrooms", value)}
@@ -206,8 +206,8 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                         </Select>
                       </div>
 
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Área Mín (m²)</Label>
+                       <div className="space-y-2">
+                         <Label className="text-sm font-medium text-primary">Área Mín (m²)</Label>
                         <Input
                           placeholder="Ex: 50"
                           value={filters.minArea}
@@ -215,8 +215,8 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                         />
                       </div>
 
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Área Máx (m²)</Label>
+                       <div className="space-y-2">
+                         <Label className="text-sm font-medium text-primary">Área Máx (m²)</Label>
                         <Input
                           placeholder="Ex: 200"
                           value={filters.maxArea}
@@ -224,8 +224,8 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                         />
                       </div>
 
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Vagas</Label>
+                       <div className="space-y-2">
+                         <Label className="text-sm font-medium text-primary">Vagas</Label>
                         <Select
                           value={filters.parkingSpots}
                           onValueChange={(value) => onFilterChange("parkingSpots", value)}
@@ -242,8 +242,8 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
                         </Select>
                       </div>
 
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium">Condomínio Máx</Label>
+                       <div className="space-y-2">
+                         <Label className="text-sm font-medium text-primary">Condomínio Máx</Label>
                         <Input
                           placeholder="Ex: 500"
                           value={formatNumberWithDots(filters.maxCondoFee)}
