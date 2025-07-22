@@ -49,16 +49,16 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
             <CollapsibleTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full flex items-center justify-between bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/80 text-white border-primary shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] animate-pulse-soft"
+                className="w-full flex items-center justify-between bg-gradient-animated bg-gradient-animated animate-gradient-x text-white border-none shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 relative z-10">
                   <Filter className="w-5 h-5" />
                   <span className="font-montserrat font-semibold">
                     Filtros Avançados
                   </span>
                 </div>
                 <ChevronDown 
-                  className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+                  className={`w-4 h-4 transition-transform duration-300 relative z-10 ${isOpen ? 'rotate-180' : ''}`} 
                 />
               </Button>
             </CollapsibleTrigger>
