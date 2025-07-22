@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -93,10 +92,10 @@ export default {
     		},
     		backgroundImage: {
     			'gradient-primary': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-    			'gradient-animated': 'linear-gradient(-45deg, #1e40af, #2563eb, #3b82f6, #1d4ed8)',
+    			'gradient-animated': 'linear-gradient(-45deg, #2563eb, #3b82f6, #1d4ed8, #2563eb)',
     		},
     		backgroundSize: {
-    			'gradient-animated': '400% 400%',
+    			'gradient-animated': '300% 300%',
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
@@ -148,7 +147,7 @@ export default {
     			'slide-up': 'slideUp 0.5s ease-out',
     			pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
     			'slow-pulse': 'slow-pulse 15s ease-in-out infinite',
-    			'gradient-x': 'gradient-x 3s ease infinite',
+    			'gradient-x': 'gradient-x 8s ease-in-out infinite',
     			'shimmer': 'shimmer 2s linear infinite'
     		}
     	}
