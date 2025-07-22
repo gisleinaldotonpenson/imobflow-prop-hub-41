@@ -21,9 +21,9 @@ import {
 
 import { Search, Home, MapPin, TrendingUp, MessageCircle, Filter } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
-import propertyIcon from "@/assets/property-icon.png";
-import neighborhoodIcon from "@/assets/neighborhood-icon.png";
-import clientsIcon from "@/assets/clients-icon.png";
+import modernHomeIcon from "@/assets/modern-home-icon.png";
+import modernLocationIcon from "@/assets/modern-location-icon.png";
+import modernChartIcon from "@/assets/modern-chart-icon.png";
 
 export default function Index() {
   const { properties, loading, error } = useProperties();
@@ -231,25 +231,31 @@ Gostaria de mais informações.`;
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 relative overflow-hidden">
-                <img src={propertyIcon} alt="Imóveis" className="w-8 h-8 object-contain" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernHomeIcon} alt="Imóveis" className="w-full h-full object-contain rounded-full" />
               </div>
-              <h3 className="text-3xl font-montserrat font-bold text-primary mb-2">1.000+</h3>
-              <p className="text-muted-foreground">Imóveis Disponíveis</p>
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 mb-2 border border-primary/20">
+                <h3 className="text-4xl font-montserrat font-bold text-primary">1.000+</h3>
+              </div>
+              <p className="text-muted-foreground font-medium">Imóveis Disponíveis</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4 relative overflow-hidden">
-                <img src={neighborhoodIcon} alt="Bairros" className="w-8 h-8 object-contain" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernLocationIcon} alt="Bairros" className="w-full h-full object-contain rounded-full" />
               </div>
-              <h3 className="text-3xl font-montserrat font-bold text-primary mb-2">50+</h3>
-              <p className="text-muted-foreground">Bairros Atendidos</p>
+              <div className="bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg p-4 mb-2 border border-accent/20">
+                <h3 className="text-4xl font-montserrat font-bold text-primary">50+</h3>
+              </div>
+              <p className="text-muted-foreground font-medium">Bairros Atendidos</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 relative overflow-hidden">
-                <img src={clientsIcon} alt="Clientes" className="w-8 h-8 object-contain" />
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <img src={modernChartIcon} alt="Clientes" className="w-full h-full object-contain rounded-full" />
               </div>
-              <h3 className="text-3xl font-montserrat font-bold text-primary mb-2">98%</h3>
-              <p className="text-muted-foreground">Clientes Satisfeitos</p>
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-4 mb-2 border border-primary/20">
+                <h3 className="text-4xl font-montserrat font-bold text-primary">98%</h3>
+              </div>
+              <p className="text-muted-foreground font-medium">Clientes Satisfeitos</p>
             </div>
           </div>
         </div>
@@ -258,28 +264,10 @@ Gostaria de mais informações.`;
       {/* Properties Section */}
       <section id="imoveis" className="py-16">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 animate-fade-in">
-            <div className="text-center lg:text-left mb-6 lg:mb-0">
-              <h2 className="text-4xl font-montserrat font-bold text-primary mb-4">
-                Nossos Imóveis
-              </h2>
-            </div>
-            
-            <div className="flex justify-center lg:justify-end">
-              <Button
-                variant="outline"
-                className="bg-gradient-to-r from-primary/20 to-accent/20 border-primary/50 text-primary hover:from-primary/30 hover:to-accent/30 hover:border-primary/70 transition-all duration-300 shadow-sm hover:shadow-md"
-                onClick={() => {
-                  const filtersElement = document.getElementById('property-filters');
-                  if (filtersElement) {
-                    filtersElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }}
-              >
-                <Filter className="w-4 h-4 mr-2" />
-                Filtros Avançados
-              </Button>
-            </div>
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-4xl font-montserrat font-bold text-primary mb-4">
+              Nossos Imóveis
+            </h2>
           </div>
 
           {/* Filters */}
