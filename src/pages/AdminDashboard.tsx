@@ -13,6 +13,8 @@ import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { NotificationPopover } from '@/components/admin/NotificationPopover';
 import { useNotifications } from '@/hooks/useNotifications';
 import { supabase } from '@/integrations/supabase/client';
+import { useProperties } from '@/hooks/useProperties';
+import { useLeads } from '@/hooks/useLeads';
 
 
 export default function AdminDashboard() {
@@ -32,6 +34,21 @@ export default function AdminDashboard() {
   }, []);
 
   const { notifications, markAsRead } = useNotifications(userId);
+  const { properties } = useProperties();
+  const { leads } = useLeads();
+
+  // Calculate total property value
+  const totalPropertyValue = properties.reduce((total, property) => total + property.price, 0);
+  
+  // Calculate leads in negotiation (using 'negotiation' status)
+  const leadsInNegotiation = leads.filter(lead => lead.status === 'negotiation').length;
+  
+  // Get recent leads (last 30 days)
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  const recentLeads = leads.filter(lead => 
+    new Date(lead.created_at || '') > thirtyDaysAgo
+  ).slice(0, 5);
 
   return (
     <>
@@ -64,9 +81,14 @@ export default function AdminDashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">R$ 45.231.890</div>
+                    <div className="text-2xl font-bold">
+                      {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                      }).format(totalPropertyValue)}
+                    </div>
                     <p className="text-xs text-muted-foreground">
-                      +20.1% do último mês
+                      {properties.length} imóveis ativos
                     </p>
                   </CardContent>
                 </Card>
@@ -77,9 +99,9 @@ export default function AdminDashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+126</div>
+                    <div className="text-2xl font-bold">+{recentLeads.length}</div>
                     <p className="text-xs text-muted-foreground">
-                      +18% do último mês
+                      Últimos 30 dias
                     </p>
                   </CardContent>
                 </Card>
@@ -90,9 +112,9 @@ export default function AdminDashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">47</div>
+                    <div className="text-2xl font-bold">{leadsInNegotiation}</div>
                     <p className="text-xs text-muted-foreground">
-                      +12% do último mês
+                      Status: Negociação
                     </p>
                   </CardContent>
                 </Card>
@@ -116,8 +138,25 @@ export default function AdminDashboard() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-center py-8 text-muted-foreground">
-                      <p>Lista de leads recentes em desenvolvimento</p>
+                    <div className="space-y-4">
+                      {recentLeads.length > 0 ? recentLeads.map((lead) => (
+                        <div key={lead.id} className="flex items-center justify-between p-3 border rounded-lg">
+                          <div>
+                            <p className="font-medium text-sm">{lead.name}</p>
+                            <p className="text-xs text-muted-foreground">{lead.email}</p>
+                          </div>
+                          <div className="text-xs text-right">
+                            <p className="font-medium">{lead.status}</p>
+                            <p className="text-muted-foreground">
+                              {new Date(lead.created_at || '').toLocaleDateString('pt-BR')}
+                            </p>
+                          </div>
+                        </div>
+                      )) : (
+                        <div className="text-center py-4 text-muted-foreground">
+                          <p>Nenhum lead recente</p>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

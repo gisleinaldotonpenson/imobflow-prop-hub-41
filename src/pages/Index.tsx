@@ -258,26 +258,31 @@ Gostaria de mais informações.`;
       {/* Properties Section */}
       <section id="imoveis" className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl font-montserrat font-bold text-primary mb-4">
-              Nossos Imóveis
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
-              Encontre o imóvel perfeito para você com nossos filtros avançados
-            </p>
-            <Button
-              variant="outline"
-              className="mb-8"
-              onClick={() => {
-                const filtersElement = document.getElementById('property-filters');
-                if (filtersElement) {
-                  filtersElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
-            >
-              <Filter className="w-4 h-4 mr-2" />
-              Abrir Filtros
-            </Button>
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 animate-fade-in">
+            <div className="text-center lg:text-left mb-6 lg:mb-0">
+              <h2 className="text-4xl font-montserrat font-bold text-primary mb-4">
+                Nossos Imóveis
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl">
+                Encontre o imóvel perfeito para você com nossos filtros avançados
+              </p>
+            </div>
+            
+            <div className="flex justify-center lg:justify-end">
+              <Button
+                variant="outline"
+                className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/30 text-primary hover:from-primary/20 hover:to-accent/20 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md"
+                onClick={() => {
+                  const filtersElement = document.getElementById('property-filters');
+                  if (filtersElement) {
+                    filtersElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Filtros Avançados
+              </Button>
+            </div>
           </div>
 
           {/* Filters */}
@@ -467,11 +472,9 @@ Gostaria de mais informações.`;
               &copy; 2024 ImobFlow. Todos os direitos reservados.
             </p>
             
-            {/* Subtle neon button effect */}
             <div className="mt-4 md:mt-0">
-              <button className="group relative px-6 py-2 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-400/30 rounded-lg text-sm text-blue-400 hover:from-blue-500/30 hover:to-cyan-500/30 hover:border-blue-400/50 transition-all duration-300">
-                <span className="relative z-10">Powered by ImobFlow</span>
-                <div className="absolute inset-0 bg-blue-400/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <button className="px-6 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-400/20 rounded-lg text-sm text-blue-400/80 hover:text-blue-400 hover:border-blue-400/30 transition-all duration-300">
+                Powered by ImobFlow
               </button>
             </div>
           </div>

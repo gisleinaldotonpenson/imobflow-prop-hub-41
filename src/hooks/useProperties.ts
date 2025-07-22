@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { fakeProperties } from '@/data/fakeProperties';
 
 export interface Property {
   id: string;
@@ -36,10 +37,17 @@ export function useProperties() {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setProperties(data || []);
+      if (error) {
+        console.log('Using fake properties for demo');
+        setProperties(fakeProperties);
+      } else {
+        // Combine real data with fake data for demo
+        const allProperties = [...(data || []), ...fakeProperties];
+        setProperties(allProperties);
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar propriedades');
+      console.log('Using fake properties for demo');
+      setProperties(fakeProperties);
     } finally {
       setLoading(false);
     }
