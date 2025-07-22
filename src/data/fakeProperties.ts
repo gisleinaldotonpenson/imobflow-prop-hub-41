@@ -1,4 +1,10 @@
 import { Property } from '@/hooks/useProperties';
+import house1 from '@/assets/house-1.jpg';
+import house2 from '@/assets/house-2.jpg';
+import house3 from '@/assets/house-3.jpg';
+import house4 from '@/assets/house-4.jpg';
+import house5 from '@/assets/house-5.jpg';
+import house6 from '@/assets/house-6.jpg';
 
 export const fakeProperties: Property[] = [
   {
@@ -14,8 +20,8 @@ export const fakeProperties: Property[] = [
     area: 220,
     type: 'casa',
     purpose: 'aluguel',
-    image_url: '/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png',
-    images: ['/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png'],
+    image_url: house1,
+    images: [house1],
     features: ['Piscina', 'Área Gourmet', 'Jardim', 'Garagem'],
     condo_fee: 0,
     is_active: true,
@@ -35,8 +41,8 @@ export const fakeProperties: Property[] = [
     area: 280,
     type: 'sobrado',
     purpose: 'venda',
-    image_url: '/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png',
-    images: ['/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png'],
+    image_url: house2,
+    images: [house2],
     features: ['Condomínio Fechado', 'Piscina', 'Churrasqueira', 'Varanda'],
     condo_fee: 450,
     is_active: true,
@@ -56,8 +62,8 @@ export const fakeProperties: Property[] = [
     area: 120,
     type: 'apartamento',
     purpose: 'venda',
-    image_url: '/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png',
-    images: ['/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png'],
+    image_url: house3,
+    images: [house3],
     features: ['Vista Panorâmica', 'Sacada', 'Área de Lazer', 'Segurança 24h'],
     condo_fee: 350,
     is_active: true,
@@ -77,8 +83,8 @@ export const fakeProperties: Property[] = [
     area: 180,
     type: 'casa',
     purpose: 'venda',
-    image_url: '/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png',
-    images: ['/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png'],
+    image_url: house4,
+    images: [house4],
     features: ['Quintal Amplo', 'Área Gourmet', 'Portão Eletrônico'],
     condo_fee: 0,
     is_active: true,
@@ -98,8 +104,8 @@ export const fakeProperties: Property[] = [
     area: 35,
     type: 'kitnet',
     purpose: 'aluguel',
-    image_url: '/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png',
-    images: ['/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png'],
+    image_url: house6,
+    images: [house6],
     features: ['Mobiliada', 'Próximo UFG', 'Internet Inclusa'],
     condo_fee: 180,
     is_active: true,
@@ -119,8 +125,8 @@ export const fakeProperties: Property[] = [
     area: 80,
     type: 'comercial',
     purpose: 'venda',
-    image_url: '/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png',
-    images: ['/lovable-uploads/453275ea-ea88-4659-91d3-cdba063cea1e.png'],
+    image_url: house5,
+    images: [house5],
     features: ['Ponto Comercial', 'Alto Fluxo', 'Estacionamento Próximo'],
     condo_fee: 0,
     is_active: true,

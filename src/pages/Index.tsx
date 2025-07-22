@@ -263,15 +263,12 @@ Gostaria de mais informações.`;
               <h2 className="text-4xl font-montserrat font-bold text-primary mb-4">
                 Nossos Imóveis
               </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl">
-                Encontre o imóvel perfeito para você com nossos filtros avançados
-              </p>
             </div>
             
             <div className="flex justify-center lg:justify-end">
               <Button
                 variant="outline"
-                className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/30 text-primary hover:from-primary/20 hover:to-accent/20 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md"
+                className="bg-gradient-to-r from-primary/20 to-accent/20 border-primary/50 text-primary hover:from-primary/30 hover:to-accent/30 hover:border-primary/70 transition-all duration-300 shadow-sm hover:shadow-md"
                 onClick={() => {
                   const filtersElement = document.getElementById('property-filters');
                   if (filtersElement) {
@@ -399,19 +396,13 @@ Gostaria de mais informações.`;
 
 
       {/* Footer */}
-      <footer id="contato" className="relative bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 text-white py-16 overflow-hidden">
-        {/* Subtle tech background effect */}
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_24%,rgba(255,255,255,0.02)_25%,rgba(255,255,255,0.02)_26%,transparent_27%,transparent_74%,rgba(255,255,255,0.02)_75%,rgba(255,255,255,0.02)_76%,transparent_77%,transparent)] bg-[length:20px_20px]"></div>
-        
+      <footer id="contato" className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">        
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center mb-6">
-                <div className="relative">
-                  <Home className="w-10 h-10 mr-3 text-blue-400" />
-                  <div className="absolute -inset-1 bg-blue-400/20 rounded-full blur-sm"></div>
-                </div>
-                <span className="text-2xl font-montserrat font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+                <Home className="w-10 h-10 mr-3 text-blue-400" />
+                <span className="text-2xl font-montserrat font-bold">
                   ImobFlow
                 </span>
               </div>
@@ -419,48 +410,31 @@ Gostaria de mais informações.`;
                 Sistema completo para corretores imobiliários com vitrine de imóveis, 
                 CRM e integração WhatsApp.
               </p>
-              
-              {/* Tech accent line */}
-              <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full"></div>
             </div>
             
             <div>
-              <h3 className="text-lg font-montserrat font-semibold mb-6 flex items-center">
-                <span className="w-2 h-2 bg-blue-400 rounded-full mr-3 animate-pulse"></span>
+              <h3 className="text-lg font-montserrat font-semibold mb-6">
                 Contato
               </h3>
               <div className="space-y-3 text-white/80">
-                <p className="flex items-center hover:text-blue-400 transition-colors cursor-pointer">
-                  <span className="w-1 h-1 bg-blue-400/60 rounded-full mr-3"></span>
-                  (62) 9 8106-7855
-                </p>
-                <p className="flex items-center hover:text-blue-400 transition-colors cursor-pointer">
-                  <span className="w-1 h-1 bg-blue-400/60 rounded-full mr-3"></span>
-                  contato@imobflow.com.br
-                </p>
-                <p className="flex items-center hover:text-blue-400 transition-colors">
-                  <span className="w-1 h-1 bg-blue-400/60 rounded-full mr-3"></span>
-                  Goiânia - GO
-                </p>
+                <p>(62) 9 8106-7855</p>
+                <p>contato@imobflow.com.br</p>
+                <p>Goiânia - GO</p>
               </div>
             </div>
             
             <div>
-              <h3 className="text-lg font-montserrat font-semibold mb-6 flex items-center">
-                <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3 animate-pulse" style={{animationDelay: '0.5s'}}></span>
+              <h3 className="text-lg font-montserrat font-semibold mb-6">
                 Links Rápidos
               </h3>
               <div className="space-y-3">
-                <a href="#home" className="block text-white/80 hover:text-cyan-400 transition-all duration-300 hover:translate-x-1 flex items-center group">
-                  <span className="w-1 h-1 bg-cyan-400/60 rounded-full mr-3 group-hover:bg-cyan-400 transition-colors"></span>
+                <a href="#home" className="block text-white/80 hover:text-white transition-colors">
                   Início
                 </a>
-                <a href="#imoveis" className="block text-white/80 hover:text-cyan-400 transition-all duration-300 hover:translate-x-1 flex items-center group">
-                  <span className="w-1 h-1 bg-cyan-400/60 rounded-full mr-3 group-hover:bg-cyan-400 transition-colors"></span>
+                <a href="#imoveis" className="block text-white/80 hover:text-white transition-colors">
                   Imóveis
                 </a>
-                <a href="#contato" className="block text-white/80 hover:text-cyan-400 transition-all duration-300 hover:translate-x-1 flex items-center group">
-                  <span className="w-1 h-1 bg-cyan-400/60 rounded-full mr-3 group-hover:bg-cyan-400 transition-colors"></span>
+                <a href="#contato" className="block text-white/80 hover:text-white transition-colors">
                   Contato
                 </a>
               </div>
@@ -473,15 +447,12 @@ Gostaria de mais informações.`;
             </p>
             
             <div className="mt-4 md:mt-0">
-              <button className="px-6 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-400/20 rounded-lg text-sm text-blue-400/80 hover:text-blue-400 hover:border-blue-400/30 transition-all duration-300">
+              <span className="text-sm text-white/60">
                 Powered by ImobFlow
-              </button>
+              </span>
             </div>
           </div>
         </div>
-        
-        {/* Corner accent */}
-        <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-blue-500/10 to-transparent rounded-tl-full"></div>
       </footer>
 
       {/* Lead Capture Modal */}

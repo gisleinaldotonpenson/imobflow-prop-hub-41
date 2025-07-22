@@ -100,10 +100,10 @@ export function PropertyCard({
           <Button
             onClick={onWhatsAppClick}
             variant="default"
-            className="flex-1 font-montserrat bg-green-600 hover:bg-green-700"
+            className="flex-1 font-montserrat bg-green-600 hover:bg-green-700 text-white"
             size="sm"
           >
-            <MessageCircle className="w-4 h-4 mr-2" />
+            <MessageCircle className="w-4 h-4 mr-2 text-white" />
             WhatsApp
           </Button>
           <Link to={`/property/${id}`} className="flex-1">
