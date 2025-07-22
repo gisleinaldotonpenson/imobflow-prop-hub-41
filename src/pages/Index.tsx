@@ -19,8 +19,11 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import { Search, Home, MapPin, TrendingUp, MessageCircle } from "lucide-react";
+import { Search, Home, MapPin, TrendingUp, MessageCircle, Filter } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
+import propertyIcon from "@/assets/property-icon.png";
+import neighborhoodIcon from "@/assets/neighborhood-icon.png";
+import clientsIcon from "@/assets/clients-icon.png";
 
 export default function Index() {
   const { properties, loading, error } = useProperties();
@@ -228,22 +231,22 @@ Gostaria de mais informações.`;
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <Home className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 relative overflow-hidden">
+                <img src={propertyIcon} alt="Imóveis" className="w-8 h-8 object-contain" />
               </div>
               <h3 className="text-3xl font-montserrat font-bold text-primary mb-2">1.000+</h3>
               <p className="text-muted-foreground">Imóveis Disponíveis</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4 relative overflow-hidden">
+                <img src={neighborhoodIcon} alt="Bairros" className="w-8 h-8 object-contain" />
               </div>
               <h3 className="text-3xl font-montserrat font-bold text-primary mb-2">50+</h3>
               <p className="text-muted-foreground">Bairros Atendidos</p>
             </div>
             <div className="animate-fade-in">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 relative overflow-hidden">
+                <img src={clientsIcon} alt="Clientes" className="w-8 h-8 object-contain" />
               </div>
               <h3 className="text-3xl font-montserrat font-bold text-primary mb-2">98%</h3>
               <p className="text-muted-foreground">Clientes Satisfeitos</p>
@@ -259,13 +262,26 @@ Gostaria de mais informações.`;
             <h2 className="text-4xl font-montserrat font-bold text-primary mb-4">
               Nossos Imóveis
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
               Encontre o imóvel perfeito para você com nossos filtros avançados
             </p>
+            <Button
+              variant="outline"
+              className="mb-8"
+              onClick={() => {
+                const filtersElement = document.getElementById('property-filters');
+                if (filtersElement) {
+                  filtersElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+            >
+              <Filter className="w-4 h-4 mr-2" />
+              Abrir Filtros
+            </Button>
           </div>
 
           {/* Filters */}
-          <div className="mb-12">
+          <div id="property-filters" className="mb-12">
             <PropertyFilters 
               filters={filters}
               onFilterChange={handleFilterChange}
@@ -378,7 +394,7 @@ Gostaria de mais informações.`;
 
 
       {/* Footer */}
-      <footer className="bg-primary text-white py-12">
+      <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>

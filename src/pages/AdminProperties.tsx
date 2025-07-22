@@ -27,7 +27,8 @@ import {
   Pause,
   Trash2,
   Building,
-  Plus
+  Plus,
+  Eye
 } from 'lucide-react';
 import { useProperties } from "@/hooks/useProperties";
 
@@ -377,7 +378,7 @@ export default function AdminProperties() {
                     <div className="flex flex-wrap gap-2 pt-4 border-t">
                       <Link to={`/property/${property.id}`} target="_blank">
                         <Button variant="outline" size="sm" className="flex-1 lg:flex-none">
-                          <Share2 className="w-4 h-4 mr-1" />
+                          <Eye className="w-4 h-4 mr-1" />
                           <span className="hidden sm:inline">Ver</span>
                         </Button>
                       </Link>

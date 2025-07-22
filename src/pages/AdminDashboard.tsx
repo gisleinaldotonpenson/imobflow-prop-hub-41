@@ -1,4 +1,4 @@
-import { Activity, CreditCard, DollarSign, Download, Users } from 'lucide-react';
+import { Activity, CreditCard, DollarSign, Download, Users, Building, TrendingUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
@@ -54,20 +54,17 @@ export default function AdminDashboard() {
           <Tabs defaultValue="overview" className="space-y-4">
             <TabsList className="bg-primary/10">
               <TabsTrigger value="overview" className="data-[state=active]:bg-primary/10 data-[state=active]:text-foreground hover:text-foreground">Visão Geral</TabsTrigger>
-              <TabsTrigger value="analytics" className="hover:text-foreground">Analytics</TabsTrigger>
-              <TabsTrigger value="reports" className="hover:text-foreground">Relatórios</TabsTrigger>
-              <TabsTrigger value="notifications" className="hover:text-foreground">Notificações ({notifications.filter(n => !n.is_read).length})</TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card className="shadow-md border-primary/10">
                   <CardHeader className="pb-2 bg-primary/5">
                     <CardTitle className="text-sm font-medium text-primary flex items-center">
-                      <DollarSign className="w-4 h-4 mr-1" /> Receita Total
+                      <Building className="w-4 h-4 mr-1" /> Valor Total dos Imóveis
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">R$ 45.231,89</div>
+                    <div className="text-2xl font-bold">R$ 45.231.890</div>
                     <p className="text-xs text-muted-foreground">
                       +20.1% do último mês
                     </p>
@@ -76,39 +73,26 @@ export default function AdminDashboard() {
                 <Card className="shadow-md border-primary/10">
                   <CardHeader className="pb-2 bg-primary/5">
                     <CardTitle className="text-sm font-medium text-primary flex items-center">
-                      <Users className="w-4 h-4 mr-1" /> Novos Clientes
+                      <Users className="w-4 h-4 mr-1" /> Novos Clientes (CRM)
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
+                    <div className="text-2xl font-bold">+126</div>
                     <p className="text-xs text-muted-foreground">
-                      +180.1% do último mês
+                      +18% do último mês
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="shadow-md border-primary/10">
                   <CardHeader className="pb-2 bg-primary/5">
                     <CardTitle className="text-sm font-medium text-primary flex items-center">
-                      <CreditCard className="w-4 h-4 mr-1" /> Vendas
+                      <TrendingUp className="w-4 h-4 mr-1" /> Leads em Negociação
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+12,234</div>
+                    <div className="text-2xl font-bold">47</div>
                     <p className="text-xs text-muted-foreground">
-                      +19% do último mês
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card className="shadow-md border-primary/10">
-                  <CardHeader className="pb-2 bg-primary/5">
-                    <CardTitle className="text-sm font-medium text-primary flex items-center">
-                      <Activity className="w-4 h-4 mr-1" /> Ativos Agora
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+573</div>
-                    <p className="text-xs text-muted-foreground">
-                      +201 desde a última hora
+                      +12% do último mês
                     </p>
                   </CardContent>
                 </Card>
@@ -126,42 +110,18 @@ export default function AdminDashboard() {
                 </Card>
                 <Card className="col-span-3">
                   <CardHeader>
-                    <CardTitle>Vendas Recentes</CardTitle>
+                    <CardTitle>Leads Recentes</CardTitle>
                     <CardDescription>
-                      Você fez 265 vendas este mês.
+                      Novos leads que entraram no sistema.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="text-center py-8 text-muted-foreground">
-                      <p>Lista de vendas em desenvolvimento</p>
+                      <p>Lista de leads recentes em desenvolvimento</p>
                     </div>
                   </CardContent>
                 </Card>
               </div>
-            </TabsContent>
-            <TabsContent value="analytics" className="space-y-4">
-              <AnalyticsTab />
-            </TabsContent>
-            <TabsContent value="reports" className="space-y-4">
-              <div className="text-center py-8 text-muted-foreground">
-                <p>Relatórios em desenvolvimento</p>
-              </div>
-            </TabsContent>
-            <TabsContent value="notifications" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Notificações</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {notifications.map(notif => (
-                    <div key={notif.id} className={`p-4 border-b ${notif.is_read ? 'bg-muted/50' : ''}`}>
-                      <h4>{notif.title}</h4>
-                      <p>{notif.description}</p>
-                      {!notif.is_read && <Button onClick={() => markAsRead(notif.id)}>Marcar como lido</Button>}
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
             </TabsContent>
           </Tabs>
         </div>

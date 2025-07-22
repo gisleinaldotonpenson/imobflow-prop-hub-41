@@ -15,7 +15,7 @@ import AdminContacts from "./pages/AdminContacts";
 import AdminContactDetail from "./pages/AdminContactDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import { AdminSettings } from "./pages/AdminSettings";
-import AdminAIChat from "./pages/AdminAIChat";
+
 import AdminLayout from "./components/admin/AdminLayout";
 import NotFound from "./pages/NotFound";
 
@@ -42,7 +42,6 @@ const App = () => (
             <Route path="/admin/contacts" element={<AdminContacts />} />
             <Route path="/admin/contacts/:id" element={<AdminContactDetail />} />
             <Route path="/admin/settings" element={<AdminSettings />} />
-            <Route path="/admin/ai-chat" element={<AdminAIChat />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

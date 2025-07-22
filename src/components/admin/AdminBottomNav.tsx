@@ -1,4 +1,4 @@
-import { LayoutDashboard, Building, KanbanSquare, Users, Settings, Brain } from "lucide-react";
+import { LayoutDashboard, Building, KanbanSquare, Users, Settings } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -22,11 +22,6 @@ const navItems = [
     label: "Contatos",
     to: "/admin/contacts",
     icon: <Users className="w-5 h-5" />,
-  },
-  {
-    label: "Chat IA",
-    to: "/admin/ai-chat",
-    icon: <Brain className="w-5 h-5" />,
   },
   {
     label: "Ajustes",

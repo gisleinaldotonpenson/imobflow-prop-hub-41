@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { NotificationBell } from '@/components/admin/NotificationBell';
 import { Button } from '@/components/ui/button';
-import { Home, LogOut, ExternalLink, LayoutDashboard, Users, KanbanSquare, Building2, Settings, Brain } from 'lucide-react';
+import { Home, LogOut, ExternalLink, LayoutDashboard, Users, KanbanSquare, Building2, Settings } from 'lucide-react';
 
 const AdminHeader = () => {
   const navigate = useNavigate();
@@ -53,13 +53,6 @@ const AdminHeader = () => {
               >
                 <Users className="w-4 h-4" />
                 Contatos
-              </NavLink>
-              <NavLink 
-                to="/admin/ai-chat" 
-                className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : inactiveNavLinkClasses}`}
-              >
-                <Brain className="w-4 h-4" />
-                Chat IA
               </NavLink>
               <div className="flex items-center">
                 <NavLink 

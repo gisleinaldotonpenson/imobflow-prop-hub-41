@@ -1,31 +1,25 @@
 import { useMemo, useState } from 'react';
 import { useLeadStatuses, type LeadStatus } from '@/hooks/useLeadStatuses';
 import { useWhatsAppSettings } from '@/hooks/useWhatsAppSettings';
-import { useAISettings } from '@/hooks/useAISettings';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
-import { Edit, PlusCircle, Trash2, Settings, MessageCircle, Phone, Brain, Key, Sparkles } from 'lucide-react';
+import { Edit, PlusCircle, Trash2, Settings, MessageCircle, Phone } from 'lucide-react';
 import { StatusForm } from '@/components/admin/StatusForm';
 import { useToast } from '@/components/ui/use-toast';
 
 export function AdminSettings() {
   const { statuses, loading, createStatus, updateStatus, deleteStatus } = useLeadStatuses();
   const { settings, loading: whatsappLoading, updateWhatsAppNumber, getFormattedNumber } = useWhatsAppSettings();
-  const { settings: aiSettings, loading: aiLoading, updateAISettings, isAIEnabled } = useAISettings();
   const { toast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<LeadStatus | null>(null);
   const [statusToDelete, setStatusToDelete] = useState<LeadStatus | null>(null);
   const [whatsappNumber, setWhatsappNumber] = useState('');
-  const [openaiKey, setOpenaiKey] = useState('');
-  const [geminiKey, setGeminiKey] = useState('');
-  const [activeProvider, setActiveProvider] = useState<'none' | 'openai' | 'gemini'>('none');
 
   const sortedStatuses = useMemo(() => {
     if (!statuses) return [];
@@ -61,18 +55,6 @@ export function AdminSettings() {
     }
   };
 
-  const handleAISettingsUpdate = async () => {
-    const success = await updateAISettings({
-      openai_api_key: openaiKey.trim() || undefined,
-      gemini_api_key: geminiKey.trim() || undefined,
-      active_ai_provider: activeProvider
-    });
-    
-    if (success) {
-      setOpenaiKey('');
-      setGeminiKey('');
-    }
-  };
 
   return (
     <div className="p-4 lg:p-6 space-y-6">
@@ -125,96 +107,6 @@ export function AdminSettings() {
               <li>• O número será usado em todos os botões de WhatsApp do sistema</li>
               <li>• As mensagens serão personalizadas automaticamente</li>
               <li>• Atualizações são aplicadas em tempo real</li>
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-      
-      {/* AI Configuration */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Brain className="w-5 h-5 mr-2 text-purple-600" />
-            Configurações de IA
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="openai-key" className="flex items-center">
-                  <Key className="w-4 h-4 mr-1" />
-                  Chave OpenAI
-                </Label>
-                <Input
-                  id="openai-key"
-                  type="password"
-                  placeholder="sk-..."
-                  value={openaiKey}
-                  onChange={(e) => setOpenaiKey(e.target.value)}
-                  className="font-mono text-sm"
-                />
-                <p className="text-xs text-muted-foreground">
-                  {aiSettings.openai_api_key ? '✓ Configurada' : 'Não configurada'}
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="gemini-key" className="flex items-center">
-                  <Sparkles className="w-4 h-4 mr-1" />
-                  Chave Gemini
-                </Label>
-                <Input
-                  id="gemini-key"
-                  type="password"
-                  placeholder="AIza..."
-                  value={geminiKey}
-                  onChange={(e) => setGeminiKey(e.target.value)}
-                  className="font-mono text-sm"
-                />
-                <p className="text-xs text-muted-foreground">
-                  {aiSettings.gemini_api_key ? '✓ Configurada' : 'Não configurada'}
-                </p>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label>Provedor Ativo</Label>
-                <Select value={activeProvider} onValueChange={(value: 'none' | 'openai' | 'gemini') => setActiveProvider(value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o provedor" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">Nenhum</SelectItem>
-                    <SelectItem value="openai">OpenAI (GPT-4)</SelectItem>
-                    <SelectItem value="gemini">Google Gemini</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-xs text-muted-foreground">
-                  Status: {isAIEnabled() ? '🟢 Ativo' : '🔴 Inativo'}
-                </p>
-              </div>
-              
-              <Button 
-                onClick={handleAISettingsUpdate} 
-                variant="outline" 
-                size="sm"
-                disabled={aiLoading}
-                className="w-full"
-              >
-                {aiLoading ? 'Salvando...' : 'Salvar Configurações'}
-              </Button>
-            </div>
-          </div>
-          
-          <div className="p-4 bg-purple-50 border border-purple-200 rounded-md">
-            <h4 className="text-sm font-medium text-purple-800 mb-2">Recursos Disponíveis com IA:</h4>
-            <ul className="text-xs text-purple-700 space-y-1">
-              <li>• Geração automática de descrições de imóveis</li>
-              <li>• Mensagens personalizadas para leads</li>
-              <li>• Chat inteligente com consulta ao banco de dados</li>
-              <li>• Análise de sentimento em conversas</li>
             </ul>
           </div>
         </CardContent>
