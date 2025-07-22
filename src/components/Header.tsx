@@ -30,23 +30,17 @@ export function Header() {
 
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#home"
+            <Link
+              to="/"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               Início
-            </a>
+            </Link>
             <a
               href="#imoveis"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               Imóveis
-            </a>
-            <a
-              href="#sobre"
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Sobre
             </a>
             <a
               href="#contato"
@@ -90,26 +84,19 @@ export function Header() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t animate-slide-up">
             <nav className="flex flex-col space-y-4">
-              <a
-                href="#home"
+              <Link
+                to="/"
                 className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Início
-              </a>
+              </Link>
               <a
                 href="#imoveis"
                 className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Imóveis
-              </a>
-              <a
-                href="#sobre"
-                className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sobre
               </a>
               <a
                 href="#contato"
