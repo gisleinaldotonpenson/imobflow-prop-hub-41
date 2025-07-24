@@ -28,7 +28,7 @@ const AdminContacts = () => {
     if (loadingLeads || loadingStatuses) return [];
     // Join leads with statuses on the client-side
     return leads.map(lead => {
-      const status = statuses.find(s => s.id === lead.status);
+      const status = statuses.find(s => s.id === lead.status_id);
       return {
         ...lead,
         // Fallback to a default status object if not found

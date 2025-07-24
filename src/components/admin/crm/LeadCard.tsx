@@ -169,7 +169,7 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
 
     let message = `Olá ${lead.name}! Somos da nossa imobiliária e vimos seu interesse. `;
     
-    if (isAIEnabled()) {
+    if (isAIEnabled) {
       try {
         message = await aiService.generateLeadMessage({
           name: lead.name,
@@ -193,7 +193,7 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
 
   const handleAIMessage = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!isAIEnabled()) {
+    if (!isAIEnabled) {
       toast({
         title: 'IA não configurada',
         description: 'Configure a IA nas configurações para gerar mensagens.',
@@ -307,7 +307,7 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
                     </Button>
                   )}
                   
-                  {isAIEnabled() && (
+                  {isAIEnabled && (
                     <Button 
                       variant="outline" 
                       size="sm"

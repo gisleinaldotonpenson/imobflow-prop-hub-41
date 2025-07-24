@@ -1,28 +1,93 @@
-import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { fakeProperties } from '@/data/fakeProperties';
+import { useState, useEffect, useCallback } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export interface Property {
   id: string;
   title: string;
-  description?: string;
   price: number;
   location: string;
-  address?: string;
   bedrooms: number;
   bathrooms: number;
-  parking_spots?: number; // Adicionado para corrigir o erro de tipo
   area: number;
+  image_url: string;
+  images?: string[];
   type: string;
   purpose: string;
-  image_url?: string;
-  images?: string[];
-  features?: string[];
+  features: string[];
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  reference?: string;
+  parking_spots?: number;
   condo_fee?: number;
-  is_active?: boolean;
-  created_at?: string;
-  updated_at?: string;
+  description?: string;
 }
+
+// Mock data for development since we don't have a properties table
+const MOCK_PROPERTIES: Property[] = [
+  {
+    id: "1",
+    title: "Apartamento Moderno no Centro",
+    price: 450000,
+    location: "Centro, Goiânia",
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 120,
+    image_url: "/house-1.jpg",
+    images: ["/house-1.jpg", "/house-2.jpg"],
+    type: "apartamento",
+    purpose: "venda",
+    features: ["Área Gourmet", "Piscina", "Academia"],
+    is_active: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    reference: "AP001",
+    parking_spots: 2,
+    condo_fee: 350,
+    description: "Lindo apartamento com 3 quartos, 2 banheiros e área gourmet.",
+  },
+  {
+    id: "2",
+    title: "Casa com Quintal no Setor Sul",
+    price: 650000,
+    location: "Setor Sul, Goiânia",
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 200,
+    image_url: "/house-3.jpg",
+    images: ["/house-3.jpg", "/house-4.jpg"],
+    type: "casa",
+    purpose: "venda",
+    features: ["Quintal", "Garagem", "Área de Lazer"],
+    is_active: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    reference: "CS001",
+    parking_spots: 3,
+    description: "Casa espaçosa com quintal amplo, ideal para famílias.",
+  },
+  {
+    id: "3",
+    title: "Apartamento para Aluguel",
+    price: 2500,
+    location: "Setor Oeste, Goiânia",
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 80,
+    image_url: "/house-5.jpg",
+    images: ["/house-5.jpg", "/house-6.jpg"],
+    type: "apartamento",
+    purpose: "aluguel",
+    features: ["Mobiliado", "Pet Friendly"],
+    is_active: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    reference: "AL001",
+    parking_spots: 1,
+    condo_fee: 200,
+    description: "Apartamento mobiliado pronto para morar.",
+  },
+];
 
 export function useProperties() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -32,108 +97,89 @@ export function useProperties() {
   const fetchProperties = useCallback(async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('properties')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.log('Using fake properties for demo');
-        setProperties(fakeProperties);
-      } else {
-        // Combine real data with fake data for demo
-        const allProperties = [...(data || []), ...fakeProperties];
-        setProperties(allProperties);
-      }
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Load from localStorage or use mock data
+      const stored = localStorage.getItem('properties');
+      const data = stored ? JSON.parse(stored) : MOCK_PROPERTIES;
+      
+      setProperties(data);
+      setError(null);
     } catch (err) {
-      console.log('Using fake properties for demo');
-      setProperties(fakeProperties);
+      setError('Erro ao carregar propriedades');
+      console.error('Error fetching properties:', err);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const updatePropertyStatus = useCallback(async (propertyId: string, isActive: boolean) => {
-    const { error } = await supabase
-      .from('properties')
-      .update({ is_active: isActive })
-      .eq('id', propertyId);
-    if (error) {
-      console.error('Error updating property status:', error);
-      setError('Falha ao atualizar o status do imóvel.');
-    } else {
-      // Refetch to get the latest data, or rely on the realtime subscription
-      fetchProperties();
-    }
-  }, [fetchProperties]);
+  const createProperty = async (propertyData: Omit<Property, 'id' | 'created_at' | 'updated_at'>) => {
+    try {
+      const newProperty: Property = {
+        ...propertyData,
+        id: Date.now().toString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
 
-  const deleteProperty = useCallback(async (propertyId: string) => {
-    const { error } = await supabase
-      .from('properties')
-      .delete()
-      .eq('id', propertyId);
-    if (error) {
-      console.error('Error deleting property:', error);
-      setError('Falha ao excluir o imóvel.');
-    } else {
-      // Refetch to get the latest data, or rely on the realtime subscription
-      fetchProperties();
+      const updatedProperties = [...properties, newProperty];
+      setProperties(updatedProperties);
+      localStorage.setItem('properties', JSON.stringify(updatedProperties));
+
+      return { data: newProperty, error: null };
+    } catch (err) {
+      const error = 'Erro ao criar propriedade';
+      setError(error);
+      return { data: null, error };
     }
-  }, [fetchProperties]);
+  };
+
+  const updateProperty = async (id: string, updates: Partial<Property>) => {
+    try {
+      const updatedProperties = properties.map(prop => 
+        prop.id === id 
+          ? { ...prop, ...updates, updated_at: new Date().toISOString() }
+          : prop
+      );
+
+      setProperties(updatedProperties);
+      localStorage.setItem('properties', JSON.stringify(updatedProperties));
+
+      return { error: null };
+    } catch (err) {
+      const error = 'Erro ao atualizar propriedade';
+      setError(error);
+      return { error };
+    }
+  };
+
+  const deleteProperty = async (id: string) => {
+    try {
+      const updatedProperties = properties.filter(prop => prop.id !== id);
+      setProperties(updatedProperties);
+      localStorage.setItem('properties', JSON.stringify(updatedProperties));
+
+      return { error: null };
+    } catch (err) {
+      const error = 'Erro ao excluir propriedade';
+      setError(error);
+      return { error };
+    }
+  };
 
   useEffect(() => {
     fetchProperties();
-    
-    const channel = supabase
-      .channel('properties-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'properties' },
-        () => fetchProperties()
-      )
-      .subscribe();
-
-    return () => {
-      channel.unsubscribe();
-    };
   }, [fetchProperties]);
 
-  return { properties, loading, error, refetch: fetchProperties, updatePropertyStatus, deleteProperty };
+  return {
+    properties,
+    loading,
+    error,
+    createProperty,
+    updateProperty,
+    deleteProperty,
+    refetch: fetchProperties,
+  };
 }
-
-export const useWhatsAppNumber = () => {
-  const [number, setNumber] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchNumber = useCallback(async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('settings').select('whatsapp_number').single();
-    if (error) {
-      setError(error.message);
-      setNumber(null);
-    } else {
-      setNumber(data?.whatsapp_number || null);
-      setError(null);
-    }
-    setLoading(false);
-  }, []);
-
-  const updateNumber = useCallback(async (newNumber: string) => {
-    setLoading(true);
-    const { error } = await supabase.from('settings').update({ whatsapp_number: newNumber }).eq('id', 1);
-    if (error) {
-      setError(error.message);
-    } else {
-      setNumber(newNumber);
-      setError(null);
-    }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchNumber();
-  }, [fetchNumber]);
-
-  return { number, loading, error, updateNumber };
-};

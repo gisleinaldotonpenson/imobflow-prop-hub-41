@@ -33,7 +33,7 @@ export function MessageGenerator({ lead, linkedProperty, onActivityAdd }: Messag
   ];
 
   const generateMessage = async () => {
-    if (!isAIEnabled()) {
+    if (!isAIEnabled) {
       toast({
         title: 'IA não configurada',
         description: 'Configure um provedor de IA nas configurações.',
@@ -145,7 +145,7 @@ export function MessageGenerator({ lead, linkedProperty, onActivityAdd }: Messag
 
           <Button
             onClick={generateMessage}
-            disabled={generating || !isAIEnabled()}
+            disabled={generating || !isAIEnabled}
             className="w-full"
             variant="outline"
           >
@@ -162,7 +162,7 @@ export function MessageGenerator({ lead, linkedProperty, onActivityAdd }: Messag
             )}
           </Button>
 
-          {!isAIEnabled() && (
+          {!isAIEnabled && (
             <p className="text-xs text-muted-foreground">
               Configure a IA nas configurações para gerar mensagens automáticas.
             </p>

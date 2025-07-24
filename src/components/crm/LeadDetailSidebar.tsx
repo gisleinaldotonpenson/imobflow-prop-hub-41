@@ -77,7 +77,7 @@ export const LeadDetailSidebar = ({ lead, open, onOpenChange, onSave, properties
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="property" className="text-right">Imóvel</Label>
-            <Select value={editableLead.property_id || ''} onValueChange={(value) => handleInputChange('property_id', value)}>
+            <Select value={editableLead.source || ''} onValueChange={(value) => handleInputChange('source', value)}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Selecione o imóvel de interesse" />
               </SelectTrigger>

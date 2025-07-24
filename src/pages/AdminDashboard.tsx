@@ -41,7 +41,7 @@ export default function AdminDashboard() {
   const totalPropertyValue = properties.reduce((total, property) => total + property.price, 0);
   
   // Calculate leads in negotiation (using 'negotiation' status)
-  const leadsInNegotiation = leads.filter(lead => lead.status === 'negotiation').length;
+  const leadsInNegotiation = leads.filter(lead => lead.status_id === 'negotiation').length;
   
   // Get recent leads (last 30 days)
   const thirtyDaysAgo = new Date();
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
                             <p className="text-xs text-muted-foreground">{lead.email}</p>
                           </div>
                           <div className="text-xs text-right">
-                            <p className="font-medium">{lead.status}</p>
+                            <p className="font-medium">{lead.status_id}</p>
                             <p className="text-muted-foreground">
                               {new Date(lead.created_at || '').toLocaleDateString('pt-BR')}
                             </p>

@@ -10,11 +10,11 @@ export type LeadUpdate = TablesUpdate<'leads'>;
 
 // Mocks para desenvolvimento offline
 const MOCK_LEADS: LeadData[] = [
-  { id: '1', name: 'Lead de Teste 1', email: 'teste1@example.com', phone: '(11) 99999-0001', status: '1', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), property_id: null, message: 'Mensagem de teste para o lead 1' },
-  { id: '2', name: 'Lead de Teste 2', email: 'teste2@example.com', phone: '(11) 99999-0002', status: '2', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), property_id: null, message: 'Mensagem de teste para o lead 2' },
-  { id: '3', name: 'Lead de Teste 3', email: 'teste3@example.com', phone: '(11) 99999-0003', status: '3', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), property_id: null, message: 'Mensagem de teste para o lead 3' },
-  { id: '4', name: 'Lead de Teste 4', email: 'teste4@example.com', phone: '(11) 99999-0004', status: '4', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), property_id: null, message: 'Mensagem de teste para o lead 4' },
-  { id: '5', name: 'Lead de Teste 5', email: 'teste5@example.com', phone: '(11) 99999-0005', status: '5', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), property_id: null, message: 'Mensagem de teste para o lead 5' },
+  { id: '1', name: 'Lead de Teste 1', email: 'teste1@example.com', phone: '(11) 99999-0001', status_id: '1', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), source: 'website', message: 'Mensagem de teste para o lead 1' },
+  { id: '2', name: 'Lead de Teste 2', email: 'teste2@example.com', phone: '(11) 99999-0002', status_id: '2', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), source: 'facebook', message: 'Mensagem de teste para o lead 2' },
+  { id: '3', name: 'Lead de Teste 3', email: 'teste3@example.com', phone: '(11) 99999-0003', status_id: '3', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), source: 'google', message: 'Mensagem de teste para o lead 3' },
+  { id: '4', name: 'Lead de Teste 4', email: 'teste4@example.com', phone: '(11) 99999-0004', status_id: '4', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), source: 'referencia', message: 'Mensagem de teste para o lead 4' },
+  { id: '5', name: 'Lead de Teste 5', email: 'teste5@example.com', phone: '(11) 99999-0005', status_id: '5', created_at: new Date().toISOString(), updated_at: new Date().toISOString(), source: 'whatsapp', message: 'Mensagem de teste para o lead 5' },
 ];
 
 // Hook para gerenciar os leads (refatorado para não fazer joins)

@@ -1,124 +1,55 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
 
-export type AIProvider = 'none' | 'openai' | 'gemini';
-
+// Mock AI settings hook since we don't have a settings table
 export interface AISettings {
-  openai_api_key?: string;
-  gemini_api_key?: string;
-  active_ai_provider: AIProvider;
+  id: number;
+  ai_model: string;
+  ai_api_key: string;
+  response_template: string;
+  auto_response: boolean;
+  max_tokens: number;
+  temperature: number;
 }
 
+const DEFAULT_SETTINGS: AISettings = {
+  id: 1,
+  ai_model: 'gpt-3.5-turbo',
+  ai_api_key: '',
+  response_template: 'Olá {nome}, obrigado pelo interesse no imóvel {imovel}. Entraremos em contato em breve!',
+  auto_response: false,
+  max_tokens: 150,
+  temperature: 0.7,
+};
+
 export function useAISettings() {
-  const [settings, setSettings] = useState<AISettings>({
-    active_ai_provider: 'none'
-  });
-  const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
+  const [settings, setSettings] = useState<AISettings>(DEFAULT_SETTINGS);
+  const [loading, setLoading] = useState(false);
 
   const fetchSettings = async () => {
+    setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('settings')
-        .select('*')
-        .eq('id', 1)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        throw error;
-      }
-
-      if (data) {
-        setSettings({
-          openai_api_key: (data as any).openai_api_key || undefined,
-          gemini_api_key: (data as any).gemini_api_key || undefined,
-          active_ai_provider: ((data as any).active_ai_provider as AIProvider) || 'none'
-        });
+      // Use localStorage to persist settings
+      const stored = localStorage.getItem('aiSettings');
+      if (stored) {
+        setSettings(JSON.parse(stored));
       }
     } catch (error) {
-      console.error('Error fetching AI settings:', error);
-      toast({
-        title: 'Erro ao carregar configurações de IA',
-        description: 'Não foi possível carregar as configurações.',
-        variant: 'destructive'
-      });
+      console.error('Error loading AI settings:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const updateAISettings = async (newSettings: Partial<AISettings>): Promise<boolean> => {
+  const updateSettings = async (updates: Partial<AISettings>) => {
     try {
-      setLoading(true);
-      
-      // Validate provider has corresponding API key
-      if (newSettings.active_ai_provider && newSettings.active_ai_provider !== 'none') {
-        const currentKeys = { ...settings, ...newSettings };
-        if (newSettings.active_ai_provider === 'openai' && !currentKeys.openai_api_key?.trim()) {
-          toast({
-            title: 'Erro de validação',
-            description: 'Chave da OpenAI é obrigatória para ativar este provedor.',
-            variant: 'destructive'
-          });
-          return false;
-        }
-        if (newSettings.active_ai_provider === 'gemini' && !currentKeys.gemini_api_key?.trim()) {
-          toast({
-            title: 'Erro de validação',
-            description: 'Chave do Gemini é obrigatória para ativar este provedor.',
-            variant: 'destructive'
-          });
-          return false;
-        }
-      }
-
-      const { error } = await supabase
-        .from('settings')
-        .upsert({
-          id: 1,
-          ...newSettings
-        });
-
-      if (error) throw error;
-
-      setSettings(prev => ({ ...prev, ...newSettings }));
-      toast({
-        title: 'Sucesso',
-        description: 'Configurações de IA atualizadas com sucesso!'
-      });
-      return true;
+      const newSettings = { ...settings, ...updates };
+      setSettings(newSettings);
+      localStorage.setItem('aiSettings', JSON.stringify(newSettings));
+      return { error: null };
     } catch (error) {
       console.error('Error updating AI settings:', error);
-      toast({
-        title: 'Erro ao salvar',
-        description: 'Não foi possível salvar as configurações de IA.',
-        variant: 'destructive'
-      });
-      return false;
-    } finally {
-      setLoading(false);
+      return { error };
     }
-  };
-
-  const getActiveProvider = (): AIProvider => {
-    return settings.active_ai_provider;
-  };
-
-  const hasValidKey = (provider: AIProvider): boolean => {
-    switch (provider) {
-      case 'openai':
-        return !!settings.openai_api_key?.trim();
-      case 'gemini':
-        return !!settings.gemini_api_key?.trim();
-      default:
-        return false;
-    }
-  };
-
-  const isAIEnabled = (): boolean => {
-    const provider = getActiveProvider();
-    return provider !== 'none' && hasValidKey(provider);
   };
 
   useEffect(() => {
@@ -128,10 +59,8 @@ export function useAISettings() {
   return {
     settings,
     loading,
-    updateAISettings,
-    getActiveProvider,
-    hasValidKey,
-    isAIEnabled,
-    fetchSettings
+    updateSettings,
+    refetch: fetchSettings,
+    isAIEnabled: settings.auto_response && !!settings.ai_api_key,
   };
 }

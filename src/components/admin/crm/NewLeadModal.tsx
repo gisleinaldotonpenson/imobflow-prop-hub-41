@@ -42,7 +42,7 @@ export function NewLeadModal({ isOpen, onClose, onSave, leadData, setLeadData, s
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="status" className="text-right">Status</Label>
-                        <Select value={leadData.status || ''} onValueChange={(value) => handleChange('status', value)}>
+                        <Select value={leadData.status_id || ''} onValueChange={(value) => handleChange('status_id', value)}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Selecione um status" />
               </SelectTrigger>

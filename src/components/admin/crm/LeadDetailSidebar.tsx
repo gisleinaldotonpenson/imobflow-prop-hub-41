@@ -64,7 +64,7 @@ export function LeadDetailSidebar({
         email: lead.email,
         phone: lead.phone,
         message: lead.message,
-        status: lead.status.id,
+        status_id: lead.status.id,
       });
       setIsEditing(false);
       setNewNote('');
@@ -299,8 +299,8 @@ export function LeadDetailSidebar({
                       <Label htmlFor="status">Status</Label>
                       {isEditing ? (
                         <Select 
-                          value={editableLead.status || ''} 
-                          onValueChange={value => handleChange('status', value)}
+                          value={editableLead.status_id || ''} 
+                          onValueChange={value => handleChange('status_id', value)}
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione um status" />

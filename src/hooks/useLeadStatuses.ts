@@ -5,12 +5,12 @@ import { type Tables } from '@/integrations/supabase/types';
 export type LeadStatus = Tables<'lead_statuses'>;
 
 const MOCK_STATUSES: LeadStatus[] = [
-  { id: '1', name: 'Novo', color: '#3b82f6', order_num: 1 },
-  { id: '2', name: 'Em Atendimento', color: '#f97316', order_num: 2 },
-  { id: '3', name: 'Proposta Enviada', color: '#8b5cf6', order_num: 3 },
-  { id: '4', name: 'Negociação', color: '#eab308', order_num: 4 },
-  { id: '5', name: 'Vendido', color: '#22c55e', order_num: 5 },
-  { id: '6', name: 'Perdido', color: '#ef4444', order_num: 6 },
+  { id: '1', name: 'Novo', color: '#3b82f6', order_num: 1, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+  { id: '2', name: 'Em Atendimento', color: '#f97316', order_num: 2, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+  { id: '3', name: 'Proposta Enviada', color: '#8b5cf6', order_num: 3, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+  { id: '4', name: 'Negociação', color: '#eab308', order_num: 4, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+  { id: '5', name: 'Vendido', color: '#22c55e', order_num: 5, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+  { id: '6', name: 'Perdido', color: '#ef4444', order_num: 6, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
 ];
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;

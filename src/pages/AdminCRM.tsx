@@ -62,7 +62,7 @@ export default function AdminCRM() {
     const defaultStatus = statuses.find(s => s.order_num === 1) || statuses[0];
     return leads.map(lead => ({
       ...lead,
-      status: statuses.find(s => s.id === lead.status) || defaultStatus,
+      status: statuses.find(s => s.id === lead.status_id) || defaultStatus,
     }));
   }, [leads, statuses]);
 
@@ -137,7 +137,7 @@ export default function AdminCRM() {
     if (!newStatus) return;
 
     try {
-      await updateLead(lead.id, { status: newStatusId });
+      await updateLead(lead.id, { status_id: newStatusId });
       toast({
         title: 'Status Atualizado!',
         description: `O lead "${lead.name}" foi movido para "${newStatus.name}".`,
@@ -153,7 +153,7 @@ export default function AdminCRM() {
   }, [statuses, updateLead, toast]);
 
   const handleOpenNewLeadModal = (statusId?: string) => {
-    setNewLeadData(statusId ? { status: statusId } : {});
+    setNewLeadData(statusId ? { status_id: statusId } : {});
     setNewLeadModalOpen(true);
   };
 
@@ -192,7 +192,7 @@ export default function AdminCRM() {
           // Re-enrich the updated lead to reflect changes in the sidebar
           const updatedRawLead = leads.find(l => l.id === leadId);
           if (updatedRawLead) {
-            const status = statuses.find(s => s.id === updatedRawLead.status);
+            const status = statuses.find(s => s.id === updatedRawLead.status_id);
             if (status) {
               setSelectedLead({ ...updatedRawLead, status });
             }

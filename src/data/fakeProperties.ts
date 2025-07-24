@@ -13,7 +13,7 @@ export const fakeProperties: Property[] = [
     description: 'Linda casa com piscina e área gourmet completa',
     price: 2800,
     location: 'Jardim Goiás, Goiânia - GO',
-    address: 'Rua das Flores, 123',
+    // address: 'Rua das Flores, 123', // Removed as not in Property interface
     bedrooms: 4,
     bathrooms: 3,
     parking_spots: 2,
@@ -34,7 +34,7 @@ export const fakeProperties: Property[] = [
     description: 'Sobrado moderno com acabamento de primeira',
     price: 850000,
     location: 'Alphaville Flamboyant, Goiânia - GO',
-    address: 'Rua Alpha, 456',
+    // address: 'Rua Alpha, 456', // Removed as not in Property interface
     bedrooms: 4,
     bathrooms: 4,
     parking_spots: 3,
@@ -55,7 +55,7 @@ export const fakeProperties: Property[] = [
     description: 'Apartamento com vista panorâmica da cidade',
     price: 650000,
     location: 'Setor Bueno, Goiânia - GO',
-    address: 'Avenida T-7, 789',
+    // address: 'Avenida T-7, 789', // Removed as not in Property interface
     bedrooms: 3,
     bathrooms: 2,
     parking_spots: 2,
@@ -76,7 +76,7 @@ export const fakeProperties: Property[] = [
     description: 'Casa ampla com quintal e área de lazer',
     price: 480000,
     location: 'Setor Oeste, Goiânia - GO',
-    address: 'Rua 10, 321',
+    // address: 'Rua 10, 321', // Removed as not in Property interface
     bedrooms: 3,
     bathrooms: 2,
     parking_spots: 2,
@@ -97,7 +97,7 @@ export const fakeProperties: Property[] = [
     description: 'Kitnet mobiliada próxima à universidade',
     price: 1200,
     location: 'Setor Universitário, Goiânia - GO',
-    address: 'Rua 232, 654',
+    // address: 'Rua 232, 654', // Removed as not in Property interface
     bedrooms: 1,
     bathrooms: 1,
     parking_spots: 1,
@@ -118,7 +118,7 @@ export const fakeProperties: Property[] = [
     description: 'Loja com excelente localização no centro da cidade',
     price: 320000,
     location: 'Centro, Goiânia - GO',
-    address: 'Avenida Goiás, 987',
+    // address: 'Avenida Goiás, 987', // Removed as not in Property interface
     bedrooms: 0,
     bathrooms: 2,
     parking_spots: 0,
