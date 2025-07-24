@@ -71,10 +71,45 @@ export default function AdminPropertyEdit() {
       try {
         setLoading(true);
 
-        // Get property from localStorage since we don't have a properties table
-        const stored = localStorage.getItem('properties');
+        // Get property from localStorage - try adminProperties first, then properties
+        let stored = localStorage.getItem('adminProperties');
+        if (!stored) {
+          stored = localStorage.getItem('properties');
+        }
         const properties = stored ? JSON.parse(stored) : [];
-        const data = properties.find((p: any) => p.id === id);
+        let data = properties.find((p: any) => p.id === id);
+        
+        // If not found, try to initialize with mock data
+        if (!data && properties.length === 0) {
+          const mockProperties = [
+            {
+              id: "1",
+              title: "Apartamento Moderno no Centro",
+              description: "Lindo apartamento com 3 quartos, 2 banheiros e área gourmet completa. Localizado no centro da cidade com fácil acesso a transporte público e comércios.",
+              price: 450000,
+              location: "Centro, Goiânia",
+              bedrooms: 3,
+              bathrooms: 2,
+              area: 120,
+              is_active: true,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              image_url: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+              images: [
+                "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+                "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&h=600&fit=crop"
+              ],
+              features: ["Área Gourmet", "Piscina", "Academia", "Sacada", "2 Vagas"],
+              purpose: "venda",
+              type: "apartamento",
+              reference: "AP001",
+              parking_spots: 2,
+              condo_fee: 350,
+            }
+          ];
+          localStorage.setItem('adminProperties', JSON.stringify(mockProperties));
+          data = mockProperties.find((p: any) => p.id === id);
+        }
 
         if (!data) {
           throw new Error('Property not found');
@@ -193,8 +228,11 @@ export default function AdminPropertyEdit() {
 
     const serializedImages = images.map(img => JSON.stringify(img));
 
-    // Update property in localStorage since we don't have a properties table
-    const stored = localStorage.getItem('properties');
+    // Update property in localStorage - try adminProperties first
+    let stored = localStorage.getItem('adminProperties');
+    if (!stored) {
+      stored = localStorage.getItem('properties');
+    }
     const properties = stored ? JSON.parse(stored) : [];
     const updatedProperties = properties.map((p: any) => 
       p.id === id 
@@ -208,6 +246,8 @@ export default function AdminPropertyEdit() {
           }
         : p
     );
+    localStorage.setItem('adminProperties', JSON.stringify(updatedProperties));
+    // Also update properties for compatibility
     localStorage.setItem('properties', JSON.stringify(updatedProperties));
     const error = null; // No error for localStorage operation
 

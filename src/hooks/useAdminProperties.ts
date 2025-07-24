@@ -117,12 +117,20 @@ export function useAdminProperties() {
       
       // Load from localStorage or use mock data
       const stored = localStorage.getItem('adminProperties');
-      const data = stored ? JSON.parse(stored) : mockProperties;
+      let data = stored ? JSON.parse(stored) : [];
+      
+      // If no data exists, initialize with mock data
+      if (data.length === 0) {
+        data = mockProperties;
+        localStorage.setItem('adminProperties', JSON.stringify(data));
+      }
       
       setProperties(data);
     } catch (err) {
       setError('Erro ao carregar propriedades');
       console.error('Error fetching properties:', err);
+      // Fallback to mock data on error
+      setProperties(mockProperties);
     } finally {
       setLoading(false);
     }

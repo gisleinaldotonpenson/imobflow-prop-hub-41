@@ -22,117 +22,94 @@ export const useLeads = () => {
   const [leads, setLeads] = useState<LeadData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const isMockMode = !import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL.includes('your_');
 
   const fetchLeads = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      if (isMockMode) {
-        console.log('Using mock leads data');
-        setLeads(MOCK_LEADS);
-        return;
+      // Load from localStorage or use mock data
+      const stored = localStorage.getItem('leads');
+      let data = stored ? JSON.parse(stored) : [];
+      
+      // If no data exists, initialize with mock data
+      if (data.length === 0) {
+        data = MOCK_LEADS;
+        localStorage.setItem('leads', JSON.stringify(data));
       }
-
-      const { data, error } = await supabase.from('leads').select('*');
-
-      if (error) throw error;
-      setLeads(data || []);
+      
+      setLeads(data);
     } catch (err) {
       const error = err instanceof Error ? err : new Error('An unexpected error occurred');
       setError(error.message);
       console.error('Erro ao buscar leads:', err);
+      setLeads(MOCK_LEADS); // Fallback to mock data on error
     } finally {
       setLoading(false);
     }
-  }, [isMockMode]);
+  }, []);
 
   const createLead = useCallback(async (leadData: LeadInsert) => {
     try {
-      const { data, error } = await supabase
-        .from('leads')
-        .insert(leadData)
-        .select('*')
-        .single();
+      const newLead: LeadData = {
+        id: Math.random().toString(36).substr(2, 9),
+        name: leadData.name || '',
+        email: leadData.email || '',
+        phone: leadData.phone || '',
+        message: leadData.message || '',
+        source: leadData.source || '',
+        status_id: leadData.status_id || '1',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
 
-      if (error) throw error;
+      const updatedLeads = [...leads, newLead];
+      setLeads(updatedLeads);
+      localStorage.setItem('leads', JSON.stringify(updatedLeads));
 
-      // Create notification
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user?.id) {
-        await supabase.from('notifications').insert({
-          user_id: user.id,
-          title: 'Novo Lead Criado',
-          description: `Um novo lead "${leadData.name}" foi adicionado.`,
-          related_type: 'lead',
-          related_id: data?.id,
-        });
-      }
-
-      fetchLeads();
-      return { data, error: null };
+      return { data: newLead, error: null };
     } catch (err) {
       const error = err instanceof Error ? err : new Error('An unexpected error occurred');
       console.error('Exception creating lead:', err);
       return { data: null, error };
     }
-  }, [fetchLeads]);
+  }, [leads]);
 
-    const updateLead = useCallback(async (leadId: string, updates: LeadUpdate) => {
+  const updateLead = useCallback(async (leadId: string, updates: LeadUpdate) => {
     try {
-      const { data, error } = await supabase
-        .from('leads')
-        .update(updates)
-        .eq('id', leadId)
-        .select('*')
-        .single();
-
-      if (error) throw error;
-      fetchLeads(); // Refetch para consistência
-      return { data, error: null };
+      const updatedLeads = leads.map(lead => 
+        lead.id === leadId 
+          ? { ...lead, ...updates, updated_at: new Date().toISOString() }
+          : lead
+      );
+      
+      setLeads(updatedLeads);
+      localStorage.setItem('leads', JSON.stringify(updatedLeads));
+      
+      const updatedLead = updatedLeads.find(lead => lead.id === leadId);
+      return { data: updatedLead, error: null };
     } catch (err) {
       const error = err instanceof Error ? err : new Error('An unexpected error occurred');
       console.error('Exception updating lead:', err);
       return { data: null, error };
     }
-  }, [fetchLeads]);
+  }, [leads]);
 
   const deleteLead = useCallback(async (leadId: string) => {
     try {
-      const { error } = await supabase
-        .from('leads')
-        .delete()
-        .eq('id', leadId);
-
-      if (error) throw error;
-      fetchLeads(); // Refetch para consistência
+      const updatedLeads = leads.filter(lead => lead.id !== leadId);
+      setLeads(updatedLeads);
+      localStorage.setItem('leads', JSON.stringify(updatedLeads));
       return { error: null };
     } catch (err) {
       const error = err instanceof Error ? err : new Error('An unexpected error occurred');
       console.error('Exception deleting lead:', err);
       return { error };
     }
-  }, [fetchLeads]);
+  }, [leads]);
 
   useEffect(() => {
     fetchLeads();
-
-    if (isMockMode) {
-      console.log('Real-time updates for leads disabled in development mode');
-      return;
-    }
-
-    const channel = supabase
-      .channel('leads-changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, () => {
-        fetchLeads();
-      })
-      .subscribe();
-
-    return () => {
-      channel.unsubscribe();
-    };
-  }, [fetchLeads, isMockMode]);
+  }, [fetchLeads]);
 
   return { leads, loading, error, createLead, updateLead, deleteLead, refetch: fetchLeads };
 };

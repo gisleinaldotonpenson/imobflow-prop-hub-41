@@ -40,8 +40,8 @@ export default function AdminDashboard() {
   // Calculate total property value
   const totalPropertyValue = properties.reduce((total, property) => total + property.price, 0);
   
-  // Calculate leads in negotiation (using 'negotiation' status)
-  const leadsInNegotiation = leads.filter(lead => lead.status_id === 'negotiation').length;
+  // Calculate leads in negotiation (using '4' status which is 'Negociação')
+  const leadsInNegotiation = leads.filter(lead => lead.status_id === '4').length;
   
   // Get recent leads (last 30 days)
   const thirtyDaysAgo = new Date();

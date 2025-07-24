@@ -166,18 +166,24 @@ export function MultiImageUpload({
 
   const uploadImage = async (file: File): Promise<string | null> => {
     try {
-      // Para desenvolvimento, simular upload local
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const dataUrl = e.target?.result as string;
-          // Simular delay de upload
-          setTimeout(() => {
-            resolve(dataUrl);
-          }, 500);
-        };
-        reader.readAsDataURL(file);
-      });
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `properties/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('property-images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        console.error('Erro no upload:', uploadError);
+        return null;
+      }
+
+      const { data } = supabase.storage
+        .from('property-images')
+        .getPublicUrl(filePath);
+
+      return data.publicUrl;
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
       return null;

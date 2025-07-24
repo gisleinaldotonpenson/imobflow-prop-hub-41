@@ -13,36 +13,27 @@ const MOCK_STATUSES: LeadStatus[] = [
   { id: '6', name: 'Perdido', color: '#ef4444', order_num: 6, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
 ];
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const useMock = !SUPABASE_URL || !SUPABASE_ANON_KEY;
+// Always use mock data for now since authentication isn't implemented
+const useMock = true;
 
 export function useLeadStatuses() {
   const [statuses, setStatuses] = useState<LeadStatus[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchStatuses = useCallback(async () => {
-    if (useMock) {
-      setStatuses(MOCK_STATUSES);
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('lead_statuses')
-        .select('*')
-        .order('order_num', { ascending: true });
-
-      if (error) throw error;
-
-      if (data && data.length > 0) {
-        setStatuses(data);
-      } else {
-        // If no statuses are found in the DB, fallback to mock data.
-        setStatuses(MOCK_STATUSES);
+      // Load from localStorage or use mock data
+      const stored = localStorage.getItem('leadStatuses');
+      let data = stored ? JSON.parse(stored) : [];
+      
+      // If no data exists, initialize with mock data
+      if (data.length === 0) {
+        data = MOCK_STATUSES;
+        localStorage.setItem('leadStatuses', JSON.stringify(data));
       }
+      
+      setStatuses(data);
     } catch (error) {
       console.error('Error fetching lead statuses:', error);
       setStatuses(MOCK_STATUSES); // Fallback to mock data on error
@@ -56,35 +47,30 @@ export function useLeadStatuses() {
   }, [fetchStatuses]);
 
   const createStatus = useCallback(async (newStatusData: Omit<LeadStatus, 'id'>) => {
-    if (useMock) {
-      const newStatus = { ...newStatusData, id: Math.random().toString(36).substr(2, 9) };
-      setStatuses(prev => [...prev, newStatus]);
-      return;
-    }
-    const { error } = await supabase.from('lead_statuses').insert(newStatusData);
-    if (error) throw error;
-    await fetchStatuses();
-  }, [fetchStatuses]);
+    const newStatus = { 
+      ...newStatusData, 
+      id: Math.random().toString(36).substr(2, 9),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    const updatedStatuses = [...statuses, newStatus];
+    setStatuses(updatedStatuses);
+    localStorage.setItem('leadStatuses', JSON.stringify(updatedStatuses));
+  }, [statuses]);
 
   const updateStatus = useCallback(async (id: string, updatedData: Partial<LeadStatus>) => {
-    if (useMock) {
-      setStatuses(prev => prev.map(s => s.id === id ? { ...s, ...updatedData } : s));
-      return;
-    }
-    const { error } = await supabase.from('lead_statuses').update(updatedData).eq('id', id);
-    if (error) throw error;
-    await fetchStatuses();
-  }, [fetchStatuses]);
+    const updatedStatuses = statuses.map(s => 
+      s.id === id ? { ...s, ...updatedData, updated_at: new Date().toISOString() } : s
+    );
+    setStatuses(updatedStatuses);
+    localStorage.setItem('leadStatuses', JSON.stringify(updatedStatuses));
+  }, [statuses]);
 
   const deleteStatus = useCallback(async (id: string) => {
-    if (useMock) {
-      setStatuses(prev => prev.filter(s => s.id !== id));
-      return;
-    }
-    const { error } = await supabase.from('lead_statuses').delete().eq('id', id);
-    if (error) throw error;
-    await fetchStatuses();
-  }, [fetchStatuses]);
+    const updatedStatuses = statuses.filter(s => s.id !== id);
+    setStatuses(updatedStatuses);
+    localStorage.setItem('leadStatuses', JSON.stringify(updatedStatuses));
+  }, [statuses]);
 
   return { statuses, loading, refetch: fetchStatuses, createStatus, updateStatus, deleteStatus };
 }
