@@ -219,7 +219,7 @@ Gostaria de mais informações.`;
             <div className="flex justify-center">
               <Button
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white font-montserrat px-8 py-3 text-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                className="bg-primary hover:bg-primary/90 text-white font-montserrat px-8 py-3 text-lg shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 hover:translate-y-[-2px] ring-2 ring-primary/20 hover:ring-primary/40"
                 onClick={() => document.getElementById('imoveis')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <Search className="w-5 h-5 mr-2" />

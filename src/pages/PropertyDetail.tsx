@@ -527,7 +527,7 @@ Gostaria de mais informações.`;
                       onClick={handleShare}
                       title="Compartilhar imóvel"
                     >
-                      <MessageCircle className="w-4 h-4" />
+                      <Share2 className="w-4 h-4" />
                     </Button>
                   </div>
                   
