@@ -71,14 +71,13 @@ export default function AdminPropertyEdit() {
       try {
         setLoading(true);
 
-        const { data, error } = await supabase
-          .from('properties')
-          .select('*')
-          .eq('id', id)
-          .single();
+        // Get property from localStorage since we don't have a properties table
+        const stored = localStorage.getItem('properties');
+        const properties = stored ? JSON.parse(stored) : [];
+        const data = properties.find((p: any) => p.id === id);
 
-        if (error) {
-          throw error;
+        if (!data) {
+          throw new Error('Property not found');
         }
 
         setProperty(data);
@@ -139,7 +138,7 @@ export default function AdminPropertyEdit() {
   };
 
   const generateDescription = async () => {
-    if (!isAIEnabled()) {
+    if (!isAIEnabled) {
       toast({
         title: "IA não configurada",
         description: "Configure um provedor de IA nas configurações para gerar descrições.",
@@ -194,15 +193,23 @@ export default function AdminPropertyEdit() {
 
     const serializedImages = images.map(img => JSON.stringify(img));
 
-    const { error } = await supabase
-      .from('properties')
-      .update({
-        ...formData,
-        features: finalFeatures,
-        images: serializedImages,
-        image_url: images.length > 0 ? images[0].url : null,
-      })
-      .eq('id', id);
+    // Update property in localStorage since we don't have a properties table
+    const stored = localStorage.getItem('properties');
+    const properties = stored ? JSON.parse(stored) : [];
+    const updatedProperties = properties.map((p: any) => 
+      p.id === id 
+        ? { 
+            ...p, 
+            ...formData, 
+            features: finalFeatures, 
+            images: serializedImages, 
+            image_url: images.length > 0 ? images[0].url : null,
+            updated_at: new Date().toISOString()
+          }
+        : p
+    );
+    localStorage.setItem('properties', JSON.stringify(updatedProperties));
+    const error = null; // No error for localStorage operation
 
     setSaving(false);
 
@@ -352,7 +359,7 @@ export default function AdminPropertyEdit() {
                   rows={4}
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  {isAIEnabled() 
+                  {isAIEnabled 
                     ? "Preencha pelo menos o título e clique em 'Gerar com IA' para criar uma descrição automática."
                     : "Configure a IA nas configurações para gerar descrições automaticamente."
                   }

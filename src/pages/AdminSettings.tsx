@@ -32,7 +32,11 @@ export function AdminSettings() {
       if (selectedStatus) {
         await updateStatus(selectedStatus.id, data);
       } else {
-        await createStatus(data);
+        await createStatus({
+          ...data,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        });
       }
       toast({ title: selectedStatus ? 'Etapa atualizada!' : 'Nova etapa criada!' });
       setIsModalOpen(false);

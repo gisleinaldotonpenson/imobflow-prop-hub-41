@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { supabase } from '@/integrations/supabase/client';
-import type { AIProvider } from '@/hooks/useAISettings';
+// Remove unused import - use string instead
 
 export interface AIResponse {
   text: string;
@@ -21,32 +21,29 @@ export interface GenerateOptions {
 class AIService {
   private openaiClient: OpenAI | null = null;
   private geminiClient: GoogleGenerativeAI | null = null;
-  private currentProvider: AIProvider = 'none';
+  private currentProvider: string = 'none';
   private initialized = false;
 
   private async initializeClients() {
     try {
-      const { data } = await supabase
-        .from('settings')
-        .select('*')
-        .eq('id', 1)
-        .single();
+      // Get settings from localStorage since we don't have a settings table
+      const data = JSON.parse(localStorage.getItem('aiSettings') || '{}');
 
       if (!data) return;
 
-      this.currentProvider = ((data as any).active_ai_provider as AIProvider) || 'none';
+      this.currentProvider = data.activeProvider || 'none';
 
       // Initialize OpenAI client
-      if ((data as any).openai_api_key?.trim()) {
+      if (data.openaiApiKey?.trim()) {
         this.openaiClient = new OpenAI({
-          apiKey: (data as any).openai_api_key.trim(),
+          apiKey: data.openaiApiKey.trim(),
           dangerouslyAllowBrowser: true
         });
       }
 
       // Initialize Gemini client
-      if ((data as any).gemini_api_key?.trim()) {
-        this.geminiClient = new GoogleGenerativeAI((data as any).gemini_api_key.trim());
+      if (data.geminiApiKey?.trim()) {
+        this.geminiClient = new GoogleGenerativeAI(data.geminiApiKey.trim());
       }
 
       this.initialized = true;

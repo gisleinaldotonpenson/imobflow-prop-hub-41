@@ -200,9 +200,9 @@ function AdminContactDetail() {
         throw new Error('Lead não encontrado na base de dados.');
       }
 
-      let status = statuses.find(s => s.id === leadData.status);
+      let status = statuses.find(s => s.id === leadData.status_id);
       if (!status && statuses.length > 0) {
-        console.warn(`Status com ID "${leadData.status}" não encontrado para o lead "${leadData.name}". Usando o primeiro status como padrão.`);
+        console.warn(`Status com ID "${leadData.status_id}" não encontrado para o lead "${leadData.name}". Usando o primeiro status como padrão.`);
         status = statuses[0]; // Fallback to the first available status
       } else if (!status) {
         throw new Error(`Nenhum status disponível para associar ao lead.`);
@@ -236,7 +236,7 @@ function AdminContactDetail() {
     try {
       const { error } = await supabase
         .from('leads')
-        .update({ status: newStatusId, updated_at: new Date().toISOString() })
+        .update({ status_id: newStatusId, updated_at: new Date().toISOString() })
         .eq('id', id);
 
       if (error) throw error;
@@ -265,7 +265,7 @@ function AdminContactDetail() {
   };
 
   const handleGenerateMessage = async () => {
-    if (!isAIEnabled() || !lead) {
+    if (!isAIEnabled || !lead) {
       toast({
         title: 'IA não configurada',
         description: 'Configure a IA nas configurações para gerar mensagens.',
@@ -479,7 +479,7 @@ function AdminContactDetail() {
                         
                         <Button
                           onClick={handleGenerateMessage}
-                          disabled={generatingMessage || !isAIEnabled()}
+                          disabled={generatingMessage || !isAIEnabled}
                           className="w-full"
                           variant="outline"
                         >
@@ -496,7 +496,7 @@ function AdminContactDetail() {
                           )}
                         </Button>
 
-                        {!isAIEnabled() && (
+                        {!isAIEnabled && (
                           <p className="text-xs text-muted-foreground text-center">
                             Configure a IA nas configurações para gerar mensagens automáticas.
                           </p>

@@ -32,7 +32,7 @@ const AdminContacts = () => {
       return {
         ...lead,
         // Fallback to a default status object if not found
-        status: status || { id: 'unknown', name: 'Desconhecido', color: '#808080', order_num: 999 },
+        status: status || { id: 'unknown', name: 'Desconhecido', color: '#808080', order_num: 999, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
       };
     });
   }, [leads, statuses, loadingLeads, loadingStatuses]);

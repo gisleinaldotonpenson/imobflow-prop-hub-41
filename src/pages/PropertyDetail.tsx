@@ -101,11 +101,11 @@ export default function PropertyDetail() {
         setLoading(true);
         setError(null);
 
-        const { data, error: fetchError } = await supabase
-          .from('properties')
-          .select('*')
-          .eq('id', id)
-          .single();
+        // Get property from localStorage since we don't have a properties table
+        const stored = localStorage.getItem('properties');
+        const properties = stored ? JSON.parse(stored) : [];
+        const data = properties.find((p: any) => p.id === id);
+        const fetchError = data ? null : new Error('Property not found');
 
         if (fetchError) {
           // If property not found in database, try fake properties
@@ -142,8 +142,8 @@ export default function PropertyDetail() {
         setProperty(propertyData);
 
         // Parse images if they exist
-        if (data.images && Array.isArray(data.images)) {
-          const parsed = data.images.map((img: string | { url: string; room?: string }) => {
+        if (propertyData.images && Array.isArray(propertyData.images)) {
+          const parsed = propertyData.images.map((img: string | { url: string; room?: string }) => {
             if (typeof img === 'string') {
               try {
                 const parsedImg = JSON.parse(img);
@@ -236,9 +236,9 @@ export default function PropertyDetail() {
         name,
         phone,
         email: null,
-        property_id: property.id as string,
+        // Property linking not available in current schema
         message,
-        status: 'novo', // Using 'novo' to match the expected status format
+        status_id: 'default', // Default status
       });
 
       // Show success message
@@ -533,7 +533,7 @@ Gostaria de mais informações.`;
                   
                   <div className="flex items-center text-muted-foreground mb-4">
                     <MapPin className="w-4 h-4 mr-1" />
-                    <span>{property.address || 'Endereço não disponível'}</span>
+                    <span>{property.location || 'Endereço não disponível'}</span>
                   </div>
                   
                   <div className="text-2xl font-bold text-primary mb-6">
