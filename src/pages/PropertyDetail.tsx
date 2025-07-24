@@ -516,9 +516,20 @@ Gostaria de mais informações.`;
                     {property.purpose === "venda" ? "Venda" : "Aluguel"}
                   </Badge>
                   
-                  <h1 className="text-2xl font-bold text-foreground mb-2">
-                    {property.title || 'Imóvel sem título'}
-                  </h1>
+                  <div className="flex items-start justify-between mb-2">
+                    <h1 className="text-2xl font-bold text-foreground flex-1">
+                      {property.title || 'Imóvel sem título'}
+                    </h1>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="p-2 h-8 w-8 ml-2 text-muted-foreground hover:text-primary"
+                      onClick={handleShare}
+                      title="Compartilhar imóvel"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                    </Button>
+                  </div>
                   
                   <div className="flex items-center text-muted-foreground mb-4">
                     <MapPin className="w-4 h-4 mr-1" />
