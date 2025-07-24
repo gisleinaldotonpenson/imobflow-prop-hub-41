@@ -18,65 +18,41 @@ export const useNotifications = (userId: string | null) => {
     }
     
     setLoading(true);
-    const { data, error } = await supabase
-      .from('notifications')
-      .select('*')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching notifications:', error);
-      toast({ title: 'Erro ao buscar notificações', variant: 'destructive' });
-      setNotifications([]);
-    } else {
-      setNotifications(data || []);
-    }
+    // Temporarily disable notifications to avoid errors
+    setNotifications([]);
     setLoading(false);
-  }, [userId, toast]);
+  }, [userId]);
 
   useEffect(() => {
     fetchNotifications();
   }, [fetchNotifications]);
 
-  useEffect(() => {
-    if (!userId) return;
-
-    const channel = supabase
-      .channel(`public:notifications:user_id=eq.${userId}`)
-      .on<
-        Notification
-      >(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'notifications', filter: `user_id=eq.${userId}` },
-        () => {
-          fetchNotifications();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [userId, fetchNotifications]);
+  // Temporarily disable real-time notifications
+  // useEffect(() => {
+  //   if (!userId) return;
+  //   const channel = supabase
+  //     .channel(`public:notifications:user_id=eq.${userId}`)
+  //     .on<Notification>(
+  //       'postgres_changes',
+  //       { event: '*', schema: 'public', table: 'notifications', filter: `user_id=eq.${userId}` },
+  //       () => {
+  //         fetchNotifications();
+  //       }
+  //     )
+  //     .subscribe();
+  //   return () => {
+  //     supabase.removeChannel(channel);
+  //   };
+  // }, [userId, fetchNotifications]);
 
   const markAsRead = async (notificationId: string) => {
-    if (!userId) return;
-    const { error } = await supabase.from('notifications').update({ is_read: true }).eq('id', notificationId);
-    if (error) {
-      toast({ title: 'Erro ao marcar notificação como lida', variant: 'destructive' });
-    } else {
-      fetchNotifications();
-    }
+    // Temporarily disabled
+    return;
   };
 
   const markAllAsRead = async () => {
-    if (!userId) return;
-    const { error } = await supabase.from('notifications').update({ is_read: true }).eq('user_id', userId).eq('is_read', false);
-    if (error) {
-      toast({ title: 'Erro ao marcar todas como lidas', variant: 'destructive' });
-    } else {
-      fetchNotifications();
-    }
+    // Temporarily disabled
+    return;
   };
 
   const unreadCount = useMemo(() => notifications.filter(n => !n.is_read).length, [notifications]);
