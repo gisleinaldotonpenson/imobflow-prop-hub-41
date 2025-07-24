@@ -452,6 +452,19 @@ Gostaria de mais informações.`;
           </div>
         </div>
       </footer>
+      
+      {/* Admin Access Section */}
+      <section className="py-16 bg-muted/50">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Área Administrativa</h2>
+          <p className="text-muted-foreground mb-8">
+            Acesse o painel administrativo para gerenciar propriedades e leads
+          </p>
+          <Button asChild size="lg">
+            <a href="/auth">Acessar Admin</a>
+          </Button>
+        </div>
+      </section>
 
       {/* Lead Capture Modal */}
       <LeadCaptureModal

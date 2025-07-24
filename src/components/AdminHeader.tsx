@@ -1,14 +1,20 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { NotificationBell } from '@/components/admin/NotificationBell';
 import { Button } from '@/components/ui/button';
 import { Home, LogOut, ExternalLink, LayoutDashboard, Users, KanbanSquare, Building2, Settings } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 
 const AdminHeader = () => {
-  const navigate = useNavigate();
+  const { signOut } = useAuth();
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminAuth');
-    navigate('/admin');
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast.success("Logout realizado com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao fazer logout");
+    }
   };
 
   const navLinkClasses = 'flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors';

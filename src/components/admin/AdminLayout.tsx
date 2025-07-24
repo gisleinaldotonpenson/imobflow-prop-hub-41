@@ -1,30 +1,14 @@
 import { NotificationPopover } from '@/components/admin/NotificationPopover';
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import AdminHeader from '@/components/AdminHeader';
 import { AdminBottomNav } from '@/components/admin/AdminBottomNav';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function AdminLayout() {
-  const navigate = useNavigate();
   const isMobile = useIsMobile();
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("adminAuth");
-    if (!isLoggedIn) {
-      navigate("/admin");
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUserId(user?.id || null);
-    };
-    fetchUser();
-  }, []);
+  const { user } = useAuth();
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -35,7 +19,7 @@ export default function AdminLayout() {
         </main>
       </div>
       {isMobile && <AdminBottomNav />}
-      {userId && <NotificationPopover userId={userId} />}
+      {user?.id && <NotificationPopover userId={user.id} />}
     </div>
   );
 }
