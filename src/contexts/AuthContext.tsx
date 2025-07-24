@@ -52,6 +52,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signIn = async (email: string, password: string) => {
+    // Mock authentication for development
+    if (email === 'admin@admin.com' && password === 'teste123') {
+      // Create a mock user session
+      const mockUser = {
+        id: 'mock-admin-id',
+        email: 'admin@admin.com',
+        aud: 'authenticated',
+        role: 'authenticated',
+        email_confirmed_at: new Date().toISOString(),
+        app_metadata: {},
+        user_metadata: {},
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      } as User;
+
+      const mockSession = {
+        user: mockUser,
+        access_token: 'mock-token',
+        refresh_token: 'mock-refresh',
+        expires_in: 3600,
+        expires_at: Date.now() + 3600000,
+        token_type: 'bearer',
+      } as Session;
+
+      setUser(mockUser);
+      setSession(mockSession);
+      return { error: null };
+    }
+
+    // For real Supabase authentication
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,

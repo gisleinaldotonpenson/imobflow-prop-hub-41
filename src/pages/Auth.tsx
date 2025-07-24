@@ -34,7 +34,11 @@ export default function Auth() {
         : await signUp(email, password);
 
       if (error) {
-        toast.error(error.message);
+        if (error.message.includes('Invalid login credentials')) {
+          toast.error('Email ou senha incorretos. Use: admin@admin.com / teste123');
+        } else {
+          toast.error(error.message);
+        }
       } else if (!isLogin) {
         toast.success('Conta criada! Verifique seu email para ativar.');
       } else {
