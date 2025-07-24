@@ -83,9 +83,8 @@ export default function Index() {
         name,
         phone,
         email: null,
-        property_id: selectedProperty?.id || null,
         message: `Interesse no imóvel: ${selectedProperty?.title}`,
-        status: "novo",
+        source: "whatsapp",
       };
 
       const { error } = await createLead(leadData);
