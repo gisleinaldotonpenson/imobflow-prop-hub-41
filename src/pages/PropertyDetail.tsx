@@ -278,20 +278,29 @@ Gostaria de mais informações.`;
   // Handle share functionality
   const handleShare = async () => {
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: property && typeof property.title === 'string' ? property.title : 'Imóvel',
-          text: 'Confira este imóvel:',
-          url: window.location.href,
-        });
-      } else {
-        await copyToClipboard();
+      if (property) {
+        // Format the message with property details
+        const message = `Confira este imóvel: ${property.title || 'Imóvel sem título'}
+
+💰 Preço: ${formatPrice(property.price)}
+📍 Localização: ${property.location || 'Localização não informada'}
+🛏️ Quartos: ${property.bedrooms || 0}
+🚿 Banheiros: ${property.bathrooms || 0}
+📐 Área: ${property.area ? `${property.area} m²` : 'Área não informada'}
+
+🔗 Link: ${window.location.href}`;
+
+        // Open WhatsApp with the message
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
       }
     } catch (err) {
-      // User cancelled share
-      if (err instanceof Error && err.name !== 'AbortError') {
-        console.error('Error sharing:', err);
-      }
+      console.error('Error sharing:', err);
+      toast({
+        title: "Erro",
+        description: "Não foi possível compartilhar o imóvel.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -545,7 +554,7 @@ Gostaria de mais informações.`;
                   
                   <Button 
                     onClick={() => setIsLeadModalOpen(true)}
-                    className="w-full py-6 text-base font-medium bg-green-600 hover:bg-green-700"
+                    className="w-full py-6 text-base font-medium bg-green-600 hover:bg-green-700 text-white"
                   >
                     <MessageCircle className="w-5 h-5 mr-2" />
                     Tenho Interesse

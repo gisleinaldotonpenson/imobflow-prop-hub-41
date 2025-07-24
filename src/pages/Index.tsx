@@ -278,41 +278,6 @@ Gostaria de mais informações.`;
             <h2 className="text-4xl font-montserrat font-bold text-primary mb-4">
               Nossos Imóveis
             </h2>
-            <div className="flex justify-center mt-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-primary"
-                onClick={async () => {
-                  const url = window.location.href;
-                  if (navigator.share) {
-                    try {
-                      await navigator.share({
-                        title: 'Nossos Imóveis - ImobFlow',
-                        text: 'Confira nossa seleção de imóveis disponíveis!',
-                        url: url
-                      });
-                    } catch (error) {
-                      // Fallback to copy
-                      navigator.clipboard.writeText(url);
-                      toast({
-                        title: "Link copiado!",
-                        description: "O link foi copiado para sua área de transferência.",
-                      });
-                    }
-                  } else {
-                    navigator.clipboard.writeText(url);
-                    toast({
-                      title: "Link copiado!",
-                      description: "O link foi copiado para sua área de transferência.",
-                    });
-                  }
-                }}
-              >
-                <MessageCircle className="w-4 h-4 mr-1" />
-                Compartilhar
-              </Button>
-            </div>
           </div>
 
           {/* Filters */}
