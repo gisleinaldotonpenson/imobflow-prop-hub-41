@@ -277,39 +277,47 @@ export default function AdminCRM() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="flex flex-col flex-1">
         <main className="flex flex-col flex-1 p-4 md:p-6 lg:p-8 overflow-hidden">
-          <header className="mb-6">
-            <h1 className="text-3xl font-bold text-primary flex items-center">
-              <Users className="w-8 h-8 mr-2 text-primary" /> CRM - Gestão de Leads
-            </h1>
+          <header className="mb-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-primary flex items-center">
+                  <Users className="w-8 h-8 mr-3 text-primary" /> 
+                  CRM - Gestão de Leads
+                </h1>
+                <p className="text-muted-foreground mt-2">
+                  Gerencie seus leads e acompanhe o progresso das negociações
+                </p>
+              </div>
+            </div>
           </header>
 
-          <div className="flex flex-wrap items-center gap-4 mb-6">
+          <div className="flex flex-wrap items-center gap-4 mb-8">
             <div className="relative flex-grow max-w-lg">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <Input
                 placeholder="Buscar por nome, email, telefone..."
-                className="pl-10 focus:border-primary focus:ring-primary"
+                className="pl-10 focus:border-primary focus:ring-primary bg-white/80 backdrop-blur-sm border-white/50 shadow-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2">
+                <Button variant="outline" className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border-white/50 shadow-sm">
                   <Filter className="w-4 h-4" />
                   <span>Filtrar</span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-4">
+              <PopoverContent className="w-auto p-4 bg-white/95 backdrop-blur-sm border border-border shadow-lg">
                 <p className="text-sm">Filtros avançados aqui.</p>
               </PopoverContent>
             </Popover>
             <Popover>
               <PopoverTrigger asChild>
-                <Button id="date" variant="outline" className="w-[300px] justify-start text-left font-normal">
+                <Button id="date" variant="outline" className="w-[300px] justify-start text-left font-normal bg-white/80 backdrop-blur-sm border-white/50 shadow-sm">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {dateRange?.from ? (
                     dateRange.to ? (
@@ -325,7 +333,7 @@ export default function AdminCRM() {
                   )}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
+              <PopoverContent className="w-auto p-0 bg-white/95 backdrop-blur-sm border border-border shadow-lg" align="start">
                 <Calendar
                   initialFocus
                   mode="range"
@@ -336,7 +344,7 @@ export default function AdminCRM() {
                 />
               </PopoverContent>
             </Popover>
-            <Button onClick={() => handleOpenNewLeadModal()} className="bg-primary hover:bg-primary/90 flex items-center gap-2">
+            <Button onClick={() => handleOpenNewLeadModal()} className="bg-primary hover:bg-primary/90 flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-200">
               <PlusCircle className="w-5 h-5" />
               <span>Novo Lead</span>
             </Button>
@@ -344,7 +352,7 @@ export default function AdminCRM() {
 
           <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <div className="flex-grow overflow-hidden">
-              <div className="flex flex-col md:inline-flex md:flex-row gap-6 h-full md:overflow-x-auto md:min-w-full">
+              <div className="flex flex-col md:inline-flex md:flex-row gap-6 h-full md:overflow-x-auto md:min-w-full pb-4">
                 {sortedStatuses.map(status => (
                   <KanbanColumn
                     key={status.id}
@@ -359,7 +367,11 @@ export default function AdminCRM() {
               </div>
             </div>
             <DragOverlay>
-              {activeLead ? <LeadCard lead={activeLead} onSelectLead={() => {}} /> : null}
+              {activeLead ? (
+                <div className="transform rotate-3 scale-105">
+                  <LeadCard lead={activeLead} onSelectLead={() => {}} />
+                </div>
+              ) : null}
             </DragOverlay>
           </DndContext>
         </main>

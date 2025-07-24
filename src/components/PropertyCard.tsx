@@ -69,6 +69,13 @@ export function PropertyCard({
             {title}
           </h3>
           
+          {/* Description */}
+          {(property as any).description && (
+            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+              {(property as any).description}
+            </p>
+          )}
+          
           <div className="flex items-center text-muted-foreground mb-3">
             <MapPin className="w-4 h-4 mr-1 flex-shrink-0" />
             <span className="text-sm truncate">{location}</span>

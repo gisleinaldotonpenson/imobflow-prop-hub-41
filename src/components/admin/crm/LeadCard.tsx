@@ -106,8 +106,9 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
-    transition: transition as string,
-    opacity: isDragging ? 0.5 : 1,
+    transition: isDragging ? 'none' : (transition as string),
+    opacity: isDragging ? 0.8 : 1,
+    zIndex: isDragging ? 999 : 1,
   };
 
   const timeInStage = lead.updated_at 
@@ -115,8 +116,7 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
     : 'N/A';
     
   // Default values for optional fields
-  const leadSource = 'source' in lead ? (lead as any).source : 'Sem origem';
-  const leadNotes = 'notes' in lead ? (lead as any).notes : '';
+  // Remove source and notes from display
   const leadProperty = 'property' in lead ? (lead as any).property : null;
 
   const handleView = (e: React.MouseEvent) => {
@@ -231,7 +231,7 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
         ref={setNodeRef} 
         style={{
           ...style,
-          cursor: 'grab',
+          cursor: isDragging ? 'grabbing' : 'grab',
           position: 'relative',
           overflow: 'visible',
         }}
@@ -244,13 +244,7 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
           <CardHeader className="relative p-4 pb-2">
             <div className="flex items-start justify-between">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <Badge 
-                    variant="secondary" 
-                    className="text-xs font-medium bg-white/80 backdrop-blur-sm border border-white/50 text-foreground/90 shadow-sm"
-                  >
-                    {leadSource}
-                  </Badge>
+                <div className="flex items-center justify-between">
                   <div className="flex items-center text-xs text-muted-foreground whitespace-nowrap">
                     <Clock className="h-3 w-3 mr-1 flex-shrink-0" />
                     <span className="truncate">
@@ -286,12 +280,6 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
                     </div>
                   )}
                 </div>
-                {leadNotes && (
-                  <div className="mt-2 flex items-start text-sm text-muted-foreground">
-                    <MessageSquare className="h-3.5 w-3.5 mt-0.5 mr-1.5 flex-shrink-0 opacity-70" />
-                    <p className="line-clamp-2 text-sm">{String(leadNotes)}</p>
-                  </div>
-                )}
 
                 {/* Action Buttons */}
                 <div className="mt-3 flex items-center gap-2">
@@ -387,11 +375,6 @@ export function LeadCard({ lead, onSelectLead, onEdit, onDelete }: LeadCardProps
                 <span>{timeInStage}</span>
               </div>
             </div>
-            {leadNotes && (
-              <div className="mt-3 text-sm text-muted-foreground bg-white/30 dark:bg-black/10 px-3 py-2 rounded-md border border-white/30 dark:border-white/10">
-                <p className="line-clamp-2">{String(leadNotes)}</p>
-              </div>
-            )}
           </CardContent>
         </div>
       </Card>

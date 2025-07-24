@@ -71,15 +71,26 @@ export default function AdminPropertyEdit() {
       try {
         setLoading(true);
 
-        // Get property from localStorage - try adminProperties first, then properties
+        // Get property from localStorage - try both adminProperties and properties
         let stored = localStorage.getItem('adminProperties');
-        if (!stored) {
-          stored = localStorage.getItem('properties');
-        }
-        const properties = stored ? JSON.parse(stored) : [];
+        let properties = stored ? JSON.parse(stored) : [];
         let data = properties.find((p: any) => p.id === id);
         
-        // If not found, try to initialize with mock data
+        // If not found in adminProperties, try properties
+        if (!data) {
+          stored = localStorage.getItem('properties');
+          if (stored) {
+            const fallbackProperties = JSON.parse(stored);
+            data = fallbackProperties.find((p: any) => p.id === id);
+            // If found in properties, copy to adminProperties
+            if (data) {
+              localStorage.setItem('adminProperties', JSON.stringify(fallbackProperties));
+              properties = fallbackProperties;
+            }
+          }
+        }
+        
+        // If still not found, try to initialize with mock data
         if (!data && properties.length === 0) {
           const mockProperties = [
             {
@@ -112,6 +123,8 @@ export default function AdminPropertyEdit() {
         }
 
         if (!data) {
+          console.error('Property not found with ID:', id);
+          console.log('Available properties:', properties);
           throw new Error('Property not found');
         }
 
@@ -228,45 +241,62 @@ export default function AdminPropertyEdit() {
 
     const serializedImages = images.map(img => JSON.stringify(img));
 
-    // Update property in localStorage - try adminProperties first
-    let stored = localStorage.getItem('adminProperties');
-    if (!stored) {
-      stored = localStorage.getItem('properties');
-    }
-    const properties = stored ? JSON.parse(stored) : [];
-    const updatedProperties = properties.map((p: any) => 
-      p.id === id 
-        ? { 
-            ...p, 
-            ...formData, 
-            features: finalFeatures, 
-            images: serializedImages, 
-            image_url: images.length > 0 ? images[0].url : null,
-            updated_at: new Date().toISOString()
-          }
-        : p
-    );
-    localStorage.setItem('adminProperties', JSON.stringify(updatedProperties));
-    // Also update properties for compatibility
-    localStorage.setItem('properties', JSON.stringify(updatedProperties));
-    const error = null; // No error for localStorage operation
+    try {
+      // Update property in localStorage - try adminProperties first
+      let stored = localStorage.getItem('adminProperties');
+      if (!stored) {
+        stored = localStorage.getItem('properties');
+      }
+      const properties = stored ? JSON.parse(stored) : [];
+      
+      const propertyIndex = properties.findIndex((p: any) => p.id === id);
+      if (propertyIndex === -1) {
+        throw new Error('Property not found in storage');
+      }
+      
+      const updatedProperties = properties.map((p: any) => 
+        p.id === id 
+          ? { 
+              ...p, 
+              ...formData, 
+              features: finalFeatures, 
+              images: serializedImages, 
+              image_url: images.length > 0 ? images[0].url : p.image_url,
+              updated_at: new Date().toISOString()
+            }
+          : p
+      );
+      
+      localStorage.setItem('adminProperties', JSON.stringify(updatedProperties));
+      // Also update properties for compatibility
+      localStorage.setItem('properties', JSON.stringify(updatedProperties));
+      
+      const error = null; // No error for localStorage operation
 
-    setSaving(false);
+      setSaving(false);
 
-    if (error) {
+      if (error) {
+        console.error('Error updating property:', error);
+        toast({
+          title: "Erro ao salvar",
+          description: "Não foi possível atualizar o imóvel. Tente novamente.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Imóvel atualizado!",
+          description: "As alterações foram salvas com sucesso.",
+        });
+        navigate("/admin/properties");
+      }
+    } catch (error) {
+      setSaving(false);
       console.error('Error updating property:', error);
       toast({
         title: "Erro ao salvar",
-        description: "Não foi possível atualizar o imóvel. Tente novamente.",
+        description: error instanceof Error ? error.message : "Não foi possível atualizar o imóvel. Tente novamente.",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Imóvel atualizado!",
-        description: "As alterações foram salvas com sucesso.",
-        className: "bg-green-500 text-white",
-      });
-      navigate("/admin/properties");
     }
   };
 
