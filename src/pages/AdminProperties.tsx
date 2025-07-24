@@ -296,9 +296,9 @@ export default function AdminProperties() {
       </div>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Properties List */}
-        <div className="md:col-span-2 space-y-6">
+        <div className="lg:col-span-3 space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex flex-col sm:flex-row gap-4 w-full">
@@ -357,7 +357,11 @@ export default function AdminProperties() {
                       alt={property.title}
                       className="w-full h-full object-cover"
                     />
-                    <Badge className={property.is_active ? "bg-primary text-white" : "bg-secondary text-foreground"}>{property.is_active ? "Ativo" : "Pausado"}</Badge>
+                    <div className="absolute top-2 left-2">
+                      <Badge className={property.is_active ? "bg-green-500 text-white" : "bg-red-500 text-white"}>
+                        {property.is_active ? "Ativo" : "Pausado"}
+                      </Badge>
+                    </div>
                   </div>
                   <div className="p-4 flex-1 flex flex-col justify-between">
                     <div>
@@ -442,8 +446,8 @@ export default function AdminProperties() {
         </div>
 
         {/* Sidebar - Recent Leads */}
-        <div className="space-y-6">
-          <Card>
+        <div className="lg:col-span-1 space-y-6">
+          <Card className="h-fit">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="font-montserrat text-lg">Leads Recentes</CardTitle>

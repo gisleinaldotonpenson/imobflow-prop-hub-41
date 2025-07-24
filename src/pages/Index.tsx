@@ -144,7 +144,10 @@ Gostaria de mais informações.`;
     const { type, purpose, location, minPrice, maxPrice, bedrooms, bathrooms, minArea, maxArea, parkingSpots, maxCondoFee } = filters;
     
     return properties.filter(property => {
-                      // Filtro por tipo
+      // Filtro por status ativo (só mostra imóveis ativos na vitrine)
+      if (property.is_active === false) return false;
+      
+      // Filtro por tipo
       if (type !== "" && type !== "all" && property.type !== type) return false;
       
       // Filtro por finalidade
