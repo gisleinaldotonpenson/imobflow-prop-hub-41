@@ -49,7 +49,7 @@ export function PropertyFilters({ filters, onFilterChange, onClearFilters }: Pro
             <CollapsibleTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full flex items-center justify-between bg-gradient-animated bg-gradient-animated animate-gradient-x text-white border-none shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700"
+                className="w-full flex items-center justify-between bg-gradient-to-r from-primary to-primary/80 text-white border-none shadow-lg transition-all duration-300 hover:shadow-xl hover:from-primary/90 hover:to-primary/70"
               >
                 <div className="flex items-center gap-3 relative z-10">
                   <Filter className="w-5 h-5" />
