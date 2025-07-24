@@ -454,15 +454,25 @@ Gostaria de mais informações.`;
       </footer>
       
       {/* Admin Access Section */}
-      <section className="py-16 bg-muted/50">
+      <section className="py-16 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Área Administrativa</h2>
-          <p className="text-muted-foreground mb-8">
-            Acesse o painel administrativo para gerenciar propriedades e leads
+          <h2 className="text-3xl font-bold mb-4 text-primary">Área Administrativa</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Acesse o painel administrativo para gerenciar propriedades, leads e configurações do sistema
           </p>
-          <Button asChild size="lg">
-            <a href="/auth">Acessar Admin</a>
-          </Button>
+          <div className="space-y-4">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              <a href="/auth" className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Acessar Painel Admin
+              </a>
+            </Button>
+            <div className="text-sm text-muted-foreground bg-white/80 p-3 rounded-lg inline-block">
+              <strong>Credenciais:</strong> admin@admin.com / teste123
+            </div>
+          </div>
         </div>
       </section>
 

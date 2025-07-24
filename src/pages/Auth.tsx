@@ -52,7 +52,7 @@ export default function Auth() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-center">
-            {isLogin ? 'Entrar' : 'Criar Conta'}
+            {isLogin ? 'Acessar Painel Admin' : 'Criar Conta'}
           </CardTitle>
           <CardDescription className="text-center">
             {isLogin 
@@ -62,13 +62,23 @@ export default function Auth() {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {isLogin && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h3 className="font-semibold text-blue-900 mb-2">Credenciais para Teste:</h3>
+              <div className="space-y-1 text-sm text-blue-800">
+                <p><strong>Email:</strong> admin@admin.com</p>
+                <p><strong>Senha:</strong> teste123</p>
+              </div>
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="seu@email.com"
+                placeholder="admin@admin.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -79,15 +89,15 @@ export default function Auth() {
               <Input
                 id="password"
                 type="password"
-                placeholder="Sua senha"
+                placeholder="teste123"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Processando...' : (isLogin ? 'Entrar' : 'Criar Conta')}
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={loading}>
+              {loading ? 'Processando...' : (isLogin ? 'Entrar no Painel' : 'Criar Conta')}
             </Button>
           </form>
           
