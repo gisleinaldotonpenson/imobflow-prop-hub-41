@@ -23,14 +23,16 @@ const AdminHeader = () => {
 
   return (
     <header className="border-b bg-white sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3">
         <div className="flex items-center justify-between">
           {/* Logo and Main Nav */}
-          <div className="flex items-center gap-8">
-            <Link to="/admin/properties" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <Home className="w-7 h-7 text-primary" />
-              <span className="text-2xl font-montserrat font-bold text-primary">ImobFlow</span>
+          <div className="flex items-center gap-2 sm:gap-8">
+            <Link to="/admin/properties" className="flex items-center gap-1 sm:gap-2 hover:opacity-80 transition-opacity">
+              <Home className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
+              <span className="text-lg sm:text-2xl font-montserrat font-bold text-primary">ImobFlow</span>
             </Link>
+            
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-4">
               <NavLink 
                 to="/admin/dashboard"
@@ -60,32 +62,45 @@ const AdminHeader = () => {
                 <Users className="w-4 h-4" />
                 Contatos
               </NavLink>
-              <div className="flex items-center">
-                <NavLink 
-                  to="/admin/settings"
-                  className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : inactiveNavLinkClasses} hover:bg-primary/10 hover:text-primary`}
-                >
-                  <Settings className="w-4 h-4" />
-                  <span className="hidden md:inline">Ajustes</span>
-                </NavLink>
-                <div className="h-6 w-px bg-gray-200 mx-2"></div>
-                <NotificationBell />
-              </div>
+              <NavLink 
+                to="/admin/settings"
+                className={({ isActive }) => `${navLinkClasses} ${isActive ? activeNavLinkClasses : inactiveNavLinkClasses}`}
+              >
+                <Settings className="w-4 h-4" />
+                Ajustes
+              </NavLink>
             </nav>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2 sm:gap-4">
-            <Link to="/" target="_blank">
-              <Button variant="outline" size="sm">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Ver Site
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* Mobile: Only Notification */}
+            <div className="md:hidden">
+              <NotificationBell />
+            </div>
+            
+            {/* Desktop: All buttons */}
+            <div className="hidden md:flex items-center gap-2">
+              <NotificationBell />
+              <div className="h-6 w-px bg-gray-200 mx-2"></div>
+              <Link to="/" target="_blank">
+                <Button variant="outline" size="sm">
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Ver Site
+                </Button>
+              </Link>
+              <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-primary/10 hover:text-primary">
+                <LogOut className="w-4 h-4 mr-2" />
+                Sair
               </Button>
-            </Link>
-            <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-primary/10 hover:text-primary">
-              <LogOut className="w-4 h-4 mr-2" />
-              Sair
-            </Button>
+            </div>
+            
+            {/* Mobile: Logout button only */}
+            <div className="md:hidden">
+              <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-primary/10 hover:text-primary p-2">
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
